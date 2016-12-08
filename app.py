@@ -6,6 +6,9 @@ import sys
 import spotipy
 import spotipy.util as util
 from flask_oauthlib.client import OAuth, OAuthException
+import random
+import string
+
 
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
@@ -22,13 +25,13 @@ app.secret_key = 'development'
 oauth = OAuth(app)
 modus = Modus(app)
 
-SPOTIPY_CLIENT_ID = app.config['SPOTIPY_CLIENT_ID'] = os.environ.get('SPOTIPY_CLIENT_ID')
-SPOTIPY_CLIENT_SECRET = app.config['SPOTIPY_CLIENT_SECRET'] = os.environ.get('SPOTIPY_CLIENT_SECRET')
+SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID'] = os.environ.get('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET'] = os.environ.get('SPOTIFY_CLIENT_SECRET')
 
 spotify = oauth.remote_app(
     'spotify',
-    consumer_key=os.environ.get('SPOTIPY_CLIENT_ID'),
-    consumer_secret=os.environ.get('SPOTIPY_CLIENT_SECRET'),
+    consumer_key=os.environ.get('SPOTIFY_CLIENT_ID'),
+    consumer_secret=os.environ.get('SPOTIFY_CLIENT_SECRET'),
     # Change the scope to match whatever it us you need
     # list of scopes can be found in the url below
     # https://developer.spotify.com/web-api/using-scopes/
@@ -57,7 +60,6 @@ def login():
 
 @app.route('/callback')
 def spotify_authorized():
-
     resp = spotify.authorized_response()
     if resp is None:
         return 'Access denied: reason={0} error={1}'.format(
@@ -71,20 +73,43 @@ def spotify_authorized():
     session['oauth_token'] = (resp['access_token'], '')
     me = spotify.get('/me')
 
-
     # Save some info to the DB
+    return render_template("search.html")
 
-    return 'Logged in as id={0} name={1} redirect={2}'.format(
-        me.data['id'],
-        me.data['name'],
-        request.args.get('next')
-    )
 
 
 @spotify.tokengetter
 def get_spotify_oauth_token():
     return session.get('oauth_token')
 
+
+@app.route('/add_playlist', methods=["GET"])
+def add_playlist():
+    return render_template("add_playlist")
+
+# SPOTIFY API
+def create_playlist():
+    def random_name(size=8):
+        chars = list(string.ascii_lowercase + string.digits)
+        return ''.join(random.choice(chars) for _ in range(size))
+
+    spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/", data={"name": random_name()}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
+
+def search_artists():
+    artist = request.args.get("something")
+    spotify.get("https://api.spotify.com/v1/search?q=Radiohead&type=artist", headers={"Accept": 'application/json', "Authorization": "Bearer"})
+    # artist.data['artists']['items'][0]['id']
+
+def top_tracks():
+    spotify.get("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb/top-tracks?country=SE", headers={"Accept": 'application/json', "Authorization":"Bearer"})
+    # gettop.data['tracks'][0]['id']
+
+def add_song():
+    spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/7hHbiDnoVzUYbEThUZ5H9W/tracks?position=0&uris=spotify%3Atrack%3A2pXpURmn6zC5ZYDMms6fwa", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+
+def user_playlists():
+    spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
+    # userplaylists.data['items'][0]['id']
 
 
 @app.route('/search', methods=["GET"])
@@ -99,6 +124,8 @@ def results():
     search_test = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
     # search_location = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID", params=search_dict).json()
     return render_template("results.html", search_test=search_test)
+
+
 
 
 
