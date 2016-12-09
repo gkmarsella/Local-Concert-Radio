@@ -153,17 +153,21 @@ def results():
 
 
 
-
- 
+    # adding songs to playlist
+    for i in track_id:
+        add_song(i)
 
     
 
 
-    return render_template("results.html", search_bid=search_bid, artist_get=artist_get)
+    return render_template("results.html", search_bid=search_bid)
 
 
-
+if os.environ.get('ENV') == 'production':
+    debug = False
+else:
+    debug = True
 
 
 if __name__ == '__main__':
-    app.run(debug=True,port=3000)
+    app.run(port=3000)
