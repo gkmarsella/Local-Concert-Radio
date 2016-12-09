@@ -2,9 +2,6 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, s
 from flask_modus import Modus
 import os
 import requests
-import sys
-import spotipy
-import spotipy.util as util
 from flask_oauthlib.client import OAuth, OAuthException
 import random
 import string
