@@ -145,9 +145,8 @@ def results():
     # getting a list of one song each from each artists top tracks
     track_id = []
     for i in obj_tracks:
-        for x in i.data['tracks']:
-            track_id.append(x['id'])
-
+        if (len(i.data['tracks'])) > 0:
+            track_id.append(i.data['tracks'][0]['id'])
 
 
     # adding songs to playlist
@@ -167,4 +166,4 @@ else:
 
 
 if __name__ == '__main__':
-    app.run(port=3000)
+    app.run(debug=True,port=3000)
