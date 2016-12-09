@@ -125,17 +125,18 @@ def results():
     # creating a list of all the artists
     artist_names = []
     for s in search_bid:
-        for x in s['artists']:
-            artist_names.append(search_artists(x['name']).data)
+        if 'artists' in s: 
+            for x in s['artists']:
+                artist_names.append(search_artists(x['name']).data)
 
 
     # getting id's from all the names
     artist_ids = []
     for i in artist_names:
-        for x in i:
-            if x == 'artists':
-                for y in i['artists']['items']:
-                    artist_ids.append(y['id'])
+        if 'artists' in i and 'items' in i['artist']:
+            for y in i['artists']['items']:
+                artist_ids.append(y['id'])
+
 
 
     # searching all artists given for top tracks
@@ -147,7 +148,7 @@ def results():
     # getting a list of one song each from each artists top tracks
     track_id = []
     for i in obj_tracks:
-        if (len(i.data['tracks'])) > 0:
+        if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
             track_id.append(i.data['tracks'][0]['id'])
 
 
