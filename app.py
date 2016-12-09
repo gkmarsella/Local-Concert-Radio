@@ -8,7 +8,7 @@ import spotipy.util as util
 from flask_oauthlib.client import OAuth, OAuthException
 import random
 import string
-
+from requests.utils import quote
 
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
@@ -93,22 +93,25 @@ def create_playlist():
         chars = list(string.ascii_lowercase + string.digits)
         return ''.join(random.choice(chars) for _ in range(size))
 
-    spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/", data={"name": random_name()}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
+    new_playlist = spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
+    return render_template("results.html", new_playlist=new_playlist)
 
-def search_artists():
-    artist = request.args.get("something")
-    spotify.get("https://api.spotify.com/v1/search?q=Radiohead&type=artist", headers={"Accept": 'application/json', "Authorization": "Bearer"})
+
+def search_artists(artist):
+    return spotify.get("https://api.spotify.com/v1/search?q=" + quote(artist, safe='') + "&type=artist", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # artist.data['artists']['items'][0]['id']
 
-def top_tracks():
-    spotify.get("https://api.spotify.com/v1/artists/4Z8W4fKeB5YxbusRsdQVPb/top-tracks?country=SE", headers={"Accept": 'application/json', "Authorization":"Bearer"})
+def top_tracks(id):
+    return spotify.get("https://api.spotify.com/v1/artists/" +  quote(id, safe='') +"/top-tracks?country=SE", headers={"Accept": 'application/json', "Authorization":"Bearer"})
     # gettop.data['tracks'][0]['id']
 
-def add_song():
-    spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/7hHbiDnoVzUYbEThUZ5H9W/tracks?position=0&uris=spotify%3Atrack%3A2pXpURmn6zC5ZYDMms6fwa", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+def add_song(song):
+    return spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/7hHbiDnoVzUYbEThUZ5H9W/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+# quote("foo/bar/{}".format('greg').safe='')
+
 
 def user_playlists():
-    spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
+   return spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # userplaylists.data['items'][0]['id']
 
 
@@ -118,12 +121,45 @@ def search():
             
 @app.route('/results', methods=["GET"])
 def results():
-    # search_artist = requests.get("http://api.bandsintown.com/artists/" + request.args.get('search-artist')  + "/events.json?api_version=2.0&app_id=local_radio").json()
 
-    # search_dict = {"date": request.args.get('search-start-date') + "," + request.args.get('search-date-end'), "location": request.args.get('search-city') + "," + request.args.get('search-state'), "radius": request.args.get('search-radius')}
-    search_test = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
-    # search_location = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID", params=search_dict).json()
-    return render_template("results.html", search_test=search_test)
+    # Getting list from bands in town
+    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+    
+    # creating a list of all the artists
+    artist_names = []
+    for s in search_bid:
+        for x in s['artists']:
+            artist_names.append(search_artists(x['name']).data)
+
+
+    # getting id's from all the names
+    artist_ids = []
+    for i in artist_names:
+        for x in i['artists']['items']:
+            artist_ids.append(x['id'])
+
+
+    # searching all artists given for top tracks
+    obj_tracks = []
+    for i in artist_ids:
+        obj_tracks.append(top_tracks(i))
+
+
+    # getting a list of one song each from each artists top tracks
+    track_id = []
+    for i in obj_tracks:
+        for x in i.data['tracks']:
+            track_id.append(x['id'])
+
+
+
+
+ 
+
+    
+
+
+    return render_template("results.html", search_bid=search_bid, artist_get=artist_get)
 
 
 

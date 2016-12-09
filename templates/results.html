@@ -7,10 +7,11 @@
 		{% endfor %} -->
 		<iframe src="https://embed.spotify.com/?uri=spotify%3Auser%3Alocalconcertradio%3Aplaylist%3A4QdfaHTOZlDpkgN9JFtMeP" width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 
-        {% for s in search_test %}
+        {% for s in search_bid %}
             {% for artists in s['artists'] %}
 	            <ul>
-	                <li>Artists: {{artists['name']}}</li>
+	            	<li>does this work - </li>
+	                <li>{{artists['name']}}</li>
 	                <li>CITY: {{s['venue']['city']}}</li>
 	                <li>VENUE: {{s['venue']['name']}}</li>
 	                <li>DATE: {{s['datetime']}}</li>
