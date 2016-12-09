@@ -133,7 +133,7 @@ def results():
     # getting id's from all the names
     artist_ids = []
     for i in artist_names:
-        if 'artists' in i and 'items' in i['artist']:
+        if 'artists' in i and 'items' in i['artists']:
             for y in i['artists']['items']:
                 artist_ids.append(y['id'])
 
