@@ -132,8 +132,10 @@ def results():
     # getting id's from all the names
     artist_ids = []
     for i in artist_names:
-        for x in i['artists']['items']:
-            artist_ids.append(x['id'])
+        for x in i:
+            if x == 'artists':
+                for y in i['artists']['items']:
+                    artist_ids.append(y['id'])
 
 
     # searching all artists given for top tracks
