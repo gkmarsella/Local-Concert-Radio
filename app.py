@@ -156,7 +156,7 @@ def results():
     for i in track_id:
         add_song(i)
 
-    
+# feat., featuring, feat, 
 
 
     return render_template("results.html", search_bid=search_bid)
@@ -168,6 +168,47 @@ if os.environ.get('ENV') == 'production':
 else:
     debug = True
 
+
+
+# @app.route('/results', methods=["GET"])
+# def results():
+
+#     # Getting list from bands in town
+#     search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+    
+#     # creating a list of all the artists
+#     artist_names = []
+#     for s in search_bid:
+#         for x in s['artists']:
+#             artist_names.append(search_artists(x['name']).data)
+
+
+#     # getting id's from all the names
+#     artist_ids = []
+#     for i in artist_names:
+#         for x in i:
+#             if x == 'artists':
+#                 for y in i['artists']['items']:
+#                     artist_ids.append(y['id'])
+                    
+
+
+#     # searching all artists given for top tracks
+#     obj_tracks = []
+#     for i in artist_ids:
+#         obj_tracks.append(top_tracks(i))
+
+
+#     # getting a list of one song each from each artists top tracks
+#     track_id = []
+#     for i in obj_tracks:
+#         if (len(i.data['tracks'])) > 0:
+#             track_id.append(i.data['tracks'][0]['id'])
+
+
+#     # adding songs to playlist
+#     for i in track_id:
+#         add_song(i)
 
 
 if __name__ == '__main__':
