@@ -102,8 +102,8 @@ def top_tracks(id):
     return spotify.get("https://api.spotify.com/v1/artists/" +  quote(id, safe='') +"/top-tracks?country=SE", headers={"Accept": 'application/json', "Authorization":"Bearer"})
     # gettop.data['tracks'][0]['id']
 
-def add_song(song):
-    return spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/7hHbiDnoVzUYbEThUZ5H9W/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+def add_song(playlist, song):
+    return spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/" +  quote(playlist, safe='') + "/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
 # quote("foo/bar/{}".format('greg').safe='')
 
 
@@ -114,13 +114,21 @@ def user_playlists():
 
 @app.route('/search', methods=["GET"])
 def search():
-    return render_template("search.html")
+    searching = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+    return render_template("search.html", searching=searching)
             
 @app.route('/results', methods=["GET"])
 def results():
 
     # Getting list from bands in town
     search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+
+    # Creating a new playlist
+    create_playlist()
+
+
+    #Getting new playlist id
+    playlist_id = user_playlists().data['items'][0]['id']
     
     # creating a list of all the artists
     artist_names = []
@@ -130,18 +138,29 @@ def results():
                 artist_names.append(search_artists(x['name']).data)
 
 
-    # getting id's from all the names
-    artist_ids = []
+
+    # matching all ids with their names
+    artist_dict = {}
     for i in artist_names:
         if 'artists' in i and 'items' in i['artists']:
             for y in i['artists']['items']:
-                artist_ids.append(y['id'])
+                artist_dict.update({y['name']:y['id']}) 
 
 
+
+
+    # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
+    names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
+
+
+    # removing duplicate names
+
+
+# {k:v for k,v in artist_dict2.items() if k in sorted([k for k,v in artist_dict2.items()])}
 
     # searching all artists given for top tracks
     obj_tracks = []
-    for i in artist_ids:
+    for i in names_no_feat.values():
         obj_tracks.append(top_tracks(i))
 
 
@@ -152,14 +171,21 @@ def results():
             track_id.append(i.data['tracks'][0]['id'])
 
 
+
     # adding songs to playlist
     for i in track_id:
-        add_song(i)
-
-# feat., featuring, feat, 
+        add_song(playlist_id, i)
 
 
-    return render_template("results.html", search_bid=search_bid)
+
+
+
+
+
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3Alocalconcertradio%3Aplaylist%3A{}".format(quote(playlist_id))
+
+
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source)
 
 
 if os.environ.get('ENV') == 'production':

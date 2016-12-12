@@ -1,0 +1,58 @@
+form {
+	margin: 20px;
+	padding: 20px;
+	display: block;
+	float: left;
+	width: 50%
+}
+
+#city {
+	display: block;
+	margin: 8px;
+	width: 160px;
+}
+
+#state {
+	display: block;
+	margin: 8px;
+	width: 160px;
+}
+
+#radius {
+	display: block;
+	margin: 8px;
+	width: 160px;
+}
+
+#date-start {
+	display: block;
+	margin: 8px;
+	width: 160px;
+}
+
+#date-end {
+	display: block;
+	margin: 8px;
+	width: 160px;
+}
+
+#submitbutton {
+	display: block;
+	margin: 8px;
+	width: 160px;
+}
+
+header {
+	font-size: 60px;
+	margin-left: 300px;
+	display: block;
+}
+
+h3 {
+	margin-left: 322px;
+}
+
+.loading {
+	display: none;
+	visibility: hidden;
+}
