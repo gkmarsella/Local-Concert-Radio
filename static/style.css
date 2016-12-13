@@ -56,3 +56,24 @@ h3 {
 	display: none;
 	visibility: hidden;
 }
+
+
+/*Sort Cards*/
+
+.card {
+	display: block;
+	margin: 20px;
+	float: left;
+}
+
+.sort-image {
+	height: 300px;
+	width: 300px
+}
+
+.navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	left: 0;
+}

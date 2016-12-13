@@ -84,7 +84,9 @@ def get_spotify_oauth_token():
 def add_playlist():
     return render_template("add_playlist")
 
-# SPOTIFY API
+# ************************************************************************************************************************
+#                                                       SPOTIFY        
+# ************************************************************************************************************************
 def create_playlist():
     def random_name(size=8):
         chars = list(string.ascii_lowercase + string.digits)
@@ -111,12 +113,31 @@ def user_playlists():
    return spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # userplaylists.data['items'][0]['id']
 
+# ************************************************************************************************************************
+#                                               REQUESTS
+# ************************************************************************************************************************
 
 @app.route('/search', methods=["GET"])
 def search():
-    searching = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
-    return render_template("search.html", searching=searching)
-            
+    return render_template("search.html")
+
+@app.route('/sort', methods=["GET"])
+def sort():
+    search_bands = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+
+    def images(name):
+        get_image =  requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID").json()['image_url']
+        return get_image
+
+    first_artist = {}
+    for s in search_bands:
+        first_artist.update({s['id']:images(s['artists'][0]['name'])})
+
+    
+
+    return render_template("sort.html", search_bands=search_bands, first_artist=first_artist)
+
+
 @app.route('/results', methods=["GET"])
 def results():
 
