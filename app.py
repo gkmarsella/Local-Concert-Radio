@@ -6,6 +6,7 @@ from flask_oauthlib.client import OAuth, OAuthException
 import random
 import string
 from requests.utils import quote
+import json
 
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
@@ -80,13 +81,15 @@ def get_spotify_oauth_token():
     return session.get('oauth_token')
 
 
+# ************************************************************************************************************************
+#                                                       SPOTIFY        
+# ************************************************************************************************************************
+
 @app.route('/add_playlist', methods=["GET"])
 def add_playlist():
     return render_template("add_playlist")
 
-# ************************************************************************************************************************
-#                                                       SPOTIFY        
-# ************************************************************************************************************************
+
 def create_playlist():
     def random_name(size=8):
         chars = list(string.ascii_lowercase + string.digits)
@@ -133,16 +136,20 @@ def sort():
     for s in search_bands:
         first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
-    
 
-    return render_template("sort.html", search_bands=search_bands, first_artist=first_artist)
+    return render_template("sort.html", search_bands=search_bands, first_artist=first_artist, search_data=json.dumps(search_bands))
 
 
 @app.route('/results', methods=["GET"])
 def results():
-
+    
     # Getting list from bands in town
-    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+    # BEFORE SORT
+    # search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+    # AFTER SORT
+    search_bid = json.loads(request.args.get('ids'))
+
+
 
     # Creating a new playlist
     create_playlist()
