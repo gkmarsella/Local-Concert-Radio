@@ -8,15 +8,17 @@
 	<!-- <iframe src="https://embed.spotify.com/?uri=spotify%3Auser%3Alocalconcertradio%3Aplaylist%3A7hHbiDnoVzUYbEThUZ5H9W" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
 	<header>Local Concert Radio</header>
 	<h3>stream music from bands playing in your area</h3>
+<!-- 	<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" frameborder="0" allowtransparency="true"></iframe> -->
+
 	<div id="form">
 		<form action="{{url_for('sort')}}" method="GET">
-			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city" value="San Francisco">
+			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city" value="Providence">
 			<select name="search-state" id="state">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
 				<option value="AR">Arkansas</option>
-				<option value="CA" selected="selected">California</option>
+				<option value="CA">California</option>
 				<option value="CO">Colorado</option>
 				<option value="CT">Connecticut</option>
 				<option value="DE">Delaware</option>
@@ -51,7 +53,7 @@
 				<option value="OK">Oklahoma</option>
 				<option value="OR">Oregon</option>
 				<option value="PA">Pennsylvania</option>
-				<option value="RI">Rhode Island</option>
+				<option value="RI" selected="selected">Rhode Island</option>
 				<option value="SC">South Carolina</option>
 				<option value="SD">South Dakota</option>
 				<option value="TN">Tennessee</option>
@@ -64,8 +66,8 @@
 				<option value="WI">Wisconsin</option>
 				<option value="WY">Wyoming</option>
 			</select>
-		<input id="radius" class="searchbar" type="number" name="search-radius" placeholder="Enter a radius" value="10">
-		<input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when" value="2016-12-13">
+		<input id="radius" class="searchbar" type="number" name="search-radius" placeholder="Enter a radius" value="5">
+		<input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when" value="2016-12-15">
 		<input id="date-end" class="searchbar" type="date" name="search-date-end" placeholder="To when" value="2016-12-16">
 		<input id="submitbutton" type="submit" value="Generate playlist">
 		</div>

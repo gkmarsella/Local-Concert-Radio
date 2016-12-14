@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- 		{% for s in search_artist %}
-			<ul>
-				<li>COUNTRY = {{s['venue']['country']}}  CITY = {{s['venue']['city']}}  VENUE= {{s['venue']['name']}}  DATE = {{s['datetime']}}</li>
-			</ul>
-		{% endfor %} -->
+
 		<iframe src={{spotify_player_source}} width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
 
         {% for s in search_bid %}

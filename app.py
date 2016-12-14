@@ -85,17 +85,20 @@ def get_spotify_oauth_token():
 #                                                       SPOTIFY        
 # ************************************************************************************************************************
 
-@app.route('/add_playlist', methods=["GET"])
-def add_playlist():
-    return render_template("add_playlist")
+    
+
+
 
 
 def create_playlist():
+
     def random_name(size=8):
         chars = list(string.ascii_lowercase + string.digits)
         return ''.join(random.choice(chars) for _ in range(size))
 
-    new_playlist = spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+
+    new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
     return render_template("results.html", new_playlist=new_playlist)
 
 
@@ -108,13 +111,19 @@ def top_tracks(id):
     # gettop.data['tracks'][0]['id']
 
 def add_song(playlist, song):
-    return spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/" +  quote(playlist, safe='') + "/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+
+    return spotify.post("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists/" +  quote(playlist, safe='') + "/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
 # quote("foo/bar/{}".format('greg').safe='')
 
 
 def user_playlists():
-   return spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+
+    return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # userplaylists.data['items'][0]['id']
+
 
 # ************************************************************************************************************************
 #                                               REQUESTS
@@ -142,7 +151,7 @@ def sort():
 
 @app.route('/results', methods=["GET"])
 def results():
-    
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
     # Getting list from bands in town
     # BEFORE SORT
     # search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
@@ -198,19 +207,13 @@ def results():
         if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
             track_id.append(i.data['tracks'][0]['id'])
 
-
-
     # adding songs to playlist
     for i in track_id:
         add_song(playlist_id, i)
 
 
 
-
-
-
-
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3Alocalconcertradio%3Aplaylist%3A{}".format(quote(playlist_id))
+    spotify_player_source = ("https://embed.spotify.com/?uri=spotify%3Auser%3A" + quote(user_id, safe='') + "%3Aplaylist%3A{}".format(quote(playlist_id)))
 
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source)
