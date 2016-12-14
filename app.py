@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
 from flask_modus import Modus
+from flask_sqlalchemy import SQLAlchemy
 import os
 import requests
 from flask_oauthlib.client import OAuth, OAuthException
@@ -13,15 +14,50 @@ OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
 
 
-SPOTIFY_APP_ID = os.environ.get('SPOTIPY_CLIENT_ID')
-SPOTIFY_APP_SECRET = os.environ.get('SPOTIPY_CLIENT_SECRET')
-
-
 app = Flask(__name__)
 app.debug = True
 app.secret_key = 'development'
 oauth = OAuth(app)
 modus = Modus(app)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/local-playlist'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'secret'
+db = SQLAlchemy(app)
+
+
+# ************************************************************************************************************************
+#                                                       DATABASE        
+# ************************************************************************************************************************
+
+
+class User (db.Model):
+
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.Text)
+    user_email = db.Column(db.Text)
+    disliked_genres = db.Column(db.Text)
+    disliked_artists = db.Column(db.Text)
+    interested_events = db.Column(db.Text)
+
+    def __init__(self, user_name, user_email, disliked_genres, disliked_artists, interested_events):
+        self.user_name = user_name
+        self.user_email = user_email
+        self.disliked_genres = disliked_genres
+        self.disliked_artists = disliked_artists
+        self.interested_events = interested_events
+
+    def __repr__(self):
+        return "The user's name and email is {} {}. Disliked genres are: {} | Disliked artists are {} | Interested events are {}".format(self.user_name, self.user_email, self.disliked_genres, self.disliked_artists, self.interested_events)
+
+
+
+
+# ************************************************************************************************************************
+#                                              SPOTIFY AUTHENTICATION        
+# ************************************************************************************************************************ 
 
 SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID'] = os.environ.get('SPOTIFY_CLIENT_ID')
 SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET'] = os.environ.get('SPOTIFY_CLIENT_SECRET')
@@ -70,6 +106,8 @@ def spotify_authorized():
     # store the token in the session
     session['oauth_token'] = (resp['access_token'], '')
     me = spotify.get('/me')
+
+
 
     # Save some info to the DB
     return render_template("search.html")
@@ -158,7 +196,7 @@ def results():
     # AFTER SORT
     search_bid = json.loads(request.args.get('ids'))
 
-
+    from IPython import embed; embed()
 
     # Creating a new playlist
     create_playlist()
