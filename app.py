@@ -213,7 +213,7 @@ def results():
 
 
 
-    spotify_player_source = ("https://embed.spotify.com/?uri=spotify%3Auser%3A" + quote(user_id, safe='') + "%3Aplaylist%3A{}".format(quote(playlist_id)))
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source)
