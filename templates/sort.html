@@ -54,7 +54,8 @@
 		            	{{s['artists'][0]['name']}} 
 		    {% for i in range(1, (s['artists'])| length) %}
           {% if i %}
-		               Featuring:{{s['artists'][i]['name']}}
+		               Featuring:
+                   <div>{{s['artists'][i]['name']}}</div>
           {% endif %}
 		    {% endfor %} 
 		    		</div>

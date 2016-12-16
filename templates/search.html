@@ -1,14 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
-<!-- 	<form action="{{url_for('results')}}" method="GET">
-		<input id="searchbar" type="text" name="search-artist" placeholder="Enter an artist">
-		<input id="submitbutton" type="submit" value="Find artists">
-	</form> -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">LOGO</a>
+    </div>
 
-	<!-- <iframe src="https://embed.spotify.com/?uri=spotify%3Auser%3Alocalconcertradio%3Aplaylist%3A7hHbiDnoVzUYbEThUZ5H9W" width="300" height="380" frameborder="0" allowtransparency="true"></iframe> -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+<!--         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li> -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">User <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Hide genres</a></li>
+            <li><a href="#">Hide artists</a></li>
+            <li><a href="#">Hide venues</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Favorited events</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
 	<header>Local Concert Radio</header>
 	<h3>stream music from bands playing in your area</h3>
-<!-- 	<iframe src="https://embed.spotify.com/?uri=spotify:trackset:PREFEREDTITLE:5Z7ygHQo02SUrFmcgpwsKW,1x6ACsKV4UdWS2FMuPFUiT,4bi73jCM02fMpkI11Lqmfe" frameborder="0" allowtransparency="true"></iframe> -->
+
 
 	<div id="form">
 		<form action="{{url_for('sort')}}" method="GET">
@@ -85,6 +119,8 @@
 		{% endfor %}
 	</div>
 
+
+<!-- trie -->
 
 
 {% endblock %}

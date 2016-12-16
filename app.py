@@ -32,60 +32,6 @@ SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET'] = os.environ.get('SP
 #                                                       DATABASE        
 # ************************************************************************************************************************
 
-
-class User(db.Model):
-
-
-    __tablename__ = "users"
-
-    id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.Text)
-    user_email = db.Column(db.Text)
-
-
-    def __init__(self, user_name, user_email):
-        self.user_name = user_name
-        self.user_email = user_email
-
-
-    def __repr__(self):
-        return "The user's name and email is {} {}".format(self.user_name, self.user_email)
-
-
-class Genres(db.Model):
-
-    __tablename__ = "genres"
-
-    id = db.Column(db.Integer, primary_key=True)
-    genre = db.Column(db.Text)
-
-    def __init__(self, genre):
-        self.genre = genre
-
-
-class Artists(db.Model):
-
-    __tablename__ = "artists"
-
-    id = db.Column(db.Integer, primary_key=True)
-    artist = db.Column(db.Text)
-
-    def __init__(self, artist):
-        self.artist = artist
-
-
-
-class Events(db.Model):
-
-    __tablename__ = "events"
-
-    id = db.Column(db.Integer, primary_key=True)
-    event = db.Column(db.Text)
-
-    def __init__(self, event):
-        self.event = event
-
-
 UserGenre = db.Table('user_genres',
                     db.Column('id',
                         db.Integer,
@@ -110,7 +56,7 @@ UserArtist = db.Table('user_artists',
                         db.ForeignKey('artists.id', ondelete="cascade")))
 
 
-UserEvents = db.Table('user_events',
+UserEvent = db.Table('user_events',
                     db.Column('id',
                         db.Integer,
                         primary_key=True),
@@ -120,6 +66,72 @@ UserEvents = db.Table('user_events',
                     db.Column('event_id',
                         db.Integer,
                         db.ForeignKey('events.id', ondelete="cascade")))
+
+
+
+class User(db.Model):
+
+
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_name = db.Column(db.Text)
+    user_email = db.Column(db.Text)
+    genres = db.relationship("Genre",
+                            secondary=UserGenre,
+                            backref=db.backref('users'))
+
+    artists = db.relationship("Artist",
+                            secondary=UserArtist,
+                            backref=db.backref('users'))
+
+    events = db.relationship("Event",
+                            secondary=UserEvent,
+                            backref=db.backref('users'))
+
+
+    def __init__(self, user_name, user_email):
+        self.user_name = user_name
+        self.user_email = user_email
+
+
+    def __repr__(self):
+        return "The user's name and email is {} {}".format(self.user_name, self.user_email)
+
+
+class Genre(db.Model):
+
+    __tablename__ = "genres"
+
+    id = db.Column(db.Integer, primary_key=True)
+    genre = db.Column(db.Text)
+
+    def __init__(self, genre):
+        self.genre = genre
+
+
+class Artist(db.Model):
+
+    __tablename__ = "artists"
+
+    id = db.Column(db.Integer, primary_key=True)
+    artist = db.Column(db.Text)
+
+    def __init__(self, artist):
+        self.artist = artist
+
+
+
+class Event(db.Model):
+
+    __tablename__ = "events"
+
+    id = db.Column(db.Integer, primary_key=True)
+    event = db.Column(db.Text)
+
+    def __init__(self, event):
+        self.event = event
+
 
 
 
