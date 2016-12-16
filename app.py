@@ -266,14 +266,14 @@ def sort():
     return render_template("sort.html", search_bands=search_bands, first_artist=first_artist, search_data=json.dumps(search_bands))
 
 
-@app.route('/results', methods=["GET"])
+@app.route('/results', methods=["GET", "POST"])
 def results():
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
     # Getting list from bands in town
     # BEFORE SORT
     # search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
     # AFTER SORT
-    search_bid = json.loads(request.args.get('ids'))
+    search_bid = json.loads(request.form.get('ids'))
 
     # Creating a new playlist
     create_playlist()

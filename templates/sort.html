@@ -32,7 +32,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{url_for('search')}}">Back</a></li>
       </ul>
-      <form class="nav navbar-right" name="search-sort" action="{{url_for('results')}}" method="GET">
+      <form class="nav navbar-right" name="search-sort" action="{{url_for('results')}}" method="POST">
       	<input type="hidden" name="ids" value="{{search_data}}">
         <div class="form-group">
         </div>
@@ -51,10 +51,12 @@
 	            <div class="card">
 	            	<img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
 	            	<div class="sort-name">
-		            	{{s['artists'][0]['name']}} Featuring:
-<!-- 		    {% for i in range(1, (s['artists'])| length) %}
-		                  {{s['artists'][i]['name']}}
-		    {% endfor %}  -->
+		            	{{s['artists'][0]['name']}} 
+		    {% for i in range(1, (s['artists'])| length) %}
+          {% if i %}
+		               Featuring:{{s['artists'][i]['name']}}
+          {% endif %}
+		    {% endfor %} 
 		    		</div>
 		    		<div class="sort-city">
 		                CITY: {{s['venue']['city']}} 
