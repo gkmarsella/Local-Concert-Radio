@@ -5,6 +5,10 @@ $(function(){
 	});
 
 
+	$(".card").click(function(e){
+		$(this).toggleClass("no")
+	})
+
 
 });
 

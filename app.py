@@ -10,6 +10,7 @@ from requests.utils import quote
 import json
 
 
+
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
 
@@ -24,7 +25,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/local-playlist'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'secret'
 db = SQLAlchemy(app)
-
+SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID'] = os.environ.get('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET'] = os.environ.get('SPOTIFY_CLIENT_SECRET')
 
 # ************************************************************************************************************************
 #                                                       DATABASE        
@@ -33,24 +35,91 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
 
+
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.Text)
     user_email = db.Column(db.Text)
-    disliked_genres = db.Column(db.Text)
-    disliked_artists = db.Column(db.Text)
-    interested_events = db.Column(db.Text)
 
-    def __init__(self, user_name, user_email, disliked_genres, disliked_artists, interested_events):
+
+    def __init__(self, user_name, user_email):
         self.user_name = user_name
         self.user_email = user_email
-        self.disliked_genres = disliked_genres
-        self.disliked_artists = disliked_artists
-        self.interested_events = interested_events
+
 
     def __repr__(self):
-        return "The user's name and email is {} {}. Disliked genres are: {} | Disliked artists are {} | Interested events are {}".format(self.user_name, self.user_email, self.disliked_genres, self.disliked_artists, self.interested_events)
+        return "The user's name and email is {} {}".format(self.user_name, self.user_email)
+
+
+class Genres(db.Model):
+
+    __tablename__ = "genres"
+
+    id = db.Column(db.Integer, primary_key=True)
+    genre = db.Column(db.Text)
+
+    def __init__(self, genre):
+        self.genre = genre
+
+
+class Artists(db.Model):
+
+    __tablename__ = "artists"
+
+    id = db.Column(db.Integer, primary_key=True)
+    artist = db.Column(db.Text)
+
+    def __init__(self, artist):
+        self.artist = artist
+
+
+
+class Events(db.Model):
+
+    __tablename__ = "events"
+
+    id = db.Column(db.Integer, primary_key=True)
+    event = db.Column(db.Text)
+
+    def __init__(self, event):
+        self.event = event
+
+
+UserGenre = db.Table('user_genres',
+                    db.Column('id',
+                        db.Integer,
+                        primary_key=True),
+                    db.Column('user_id',
+                        db.Integer,
+                        db.ForeignKey('users.id', ondelete="cascade")),
+                    db.Column('genre_id',
+                        db.Integer,
+                        db.ForeignKey('genres.id', ondelete="cascade")))
+
+
+UserArtist = db.Table('user_artists',
+                    db.Column('id',
+                        db.Integer,
+                        primary_key=True),
+                    db.Column('user_id',
+                        db.Integer,
+                        db.ForeignKey('users.id', ondelete="cascade")),
+                    db.Column('artist_id',
+                        db.Integer,
+                        db.ForeignKey('artists.id', ondelete="cascade")))
+
+
+UserEvents = db.Table('user_events',
+                    db.Column('id',
+                        db.Integer,
+                        primary_key=True),
+                    db.Column('user_id',
+                        db.Integer,
+                        db.ForeignKey('users.id', ondelete="cascade")),
+                    db.Column('event_id',
+                        db.Integer,
+                        db.ForeignKey('events.id', ondelete="cascade")))
 
 
 
@@ -59,8 +128,7 @@ class User(db.Model):
 #                                              SPOTIFY AUTHENTICATION        
 # ************************************************************************************************************************ 
 
-SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID'] = os.environ.get('SPOTIFY_CLIENT_ID')
-SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET'] = os.environ.get('SPOTIFY_CLIENT_SECRET')
+
 
 spotify = oauth.remote_app(
     'spotify',
@@ -107,7 +175,12 @@ def spotify_authorized():
     session['oauth_token'] = (resp['access_token'], '')
     me = spotify.get('/me')
 
+    user_id = spotify.get("https://api.spotify.com/v1/me").data
 
+    if User.query.filter_by(user_name=user_id['id']).first() is None:
+        user_id['id'] = User(user_id['id'], user_id['email'])
+        db.session.add(user_id['id'])
+        db.session.commit()
 
     # Save some info to the DB
     return render_template("search.html")
@@ -119,11 +192,17 @@ def get_spotify_oauth_token():
     return session.get('oauth_token')
 
 
+
+# user_id = spotify.get("https://api.spotify.com/v1/me").data 
+
+# if user_id['id'] not in User.user_name:
+#     user_id['id'] = User(user_id['id'], user_id['email'])
+
+
 # ************************************************************************************************************************
 #                                                       SPOTIFY        
 # ************************************************************************************************************************
 
-    
 
 
 
@@ -196,8 +275,6 @@ def results():
     # AFTER SORT
     search_bid = json.loads(request.args.get('ids'))
 
-    from IPython import embed; embed()
-
     # Creating a new playlist
     create_playlist()
 
@@ -264,46 +341,6 @@ else:
     debug = True
 
 
-
-# @app.route('/results', methods=["GET"])
-# def results():
-
-#     # Getting list from bands in town
-#     search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
-    
-#     # creating a list of all the artists
-#     artist_names = []
-#     for s in search_bid:
-#         for x in s['artists']:
-#             artist_names.append(search_artists(x['name']).data)
-
-
-#     # getting id's from all the names
-#     artist_ids = []
-#     for i in artist_names:
-#         for x in i:
-#             if x == 'artists':
-#                 for y in i['artists']['items']:
-#                     artist_ids.append(y['id'])
-                    
-
-
-#     # searching all artists given for top tracks
-#     obj_tracks = []
-#     for i in artist_ids:
-#         obj_tracks.append(top_tracks(i))
-
-
-#     # getting a list of one song each from each artists top tracks
-#     track_id = []
-#     for i in obj_tracks:
-#         if (len(i.data['tracks'])) > 0:
-#             track_id.append(i.data['tracks'][0]['id'])
-
-
-#     # adding songs to playlist
-#     for i in track_id:
-#         add_song(i)
 
 
 if __name__ == '__main__':
