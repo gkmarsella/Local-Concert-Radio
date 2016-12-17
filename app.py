@@ -264,10 +264,15 @@ def search():
 
 @app.route('/sort', methods=["GET"])
 def sort():
-    search_bands = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
+    search_bands = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
+    search_bands = search_bands.json()
 
     def images(name):
-        get_image =  requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID").json()['image_url']
+        try:
+            get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
+            get_image = get_image.json()['image_url']
+        except json.decoder.JSONDecodeError:
+            return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
         return get_image
 
     first_artist = {}
@@ -351,6 +356,7 @@ if os.environ.get('ENV') == 'production':
 
 else:
     debug = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 
 
 

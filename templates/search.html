@@ -46,7 +46,7 @@
 
 	<div id="form">
 		<form action="{{url_for('sort')}}" method="GET">
-			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city" value="Providence">
+			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city">
 			<select name="search-state" id="state">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
@@ -87,7 +87,7 @@
 				<option value="OK">Oklahoma</option>
 				<option value="OR">Oregon</option>
 				<option value="PA">Pennsylvania</option>
-				<option value="RI" selected="selected">Rhode Island</option>
+				<option value="RI">Rhode Island</option>
 				<option value="SC">South Carolina</option>
 				<option value="SD">South Dakota</option>
 				<option value="TN">Tennessee</option>
@@ -111,13 +111,13 @@
 		<img class="loading" src="{{url_for('static', filename='images/loading-bar.gif')}}">
 	</div>
 	
-	<div>
+<!-- 	<div>
 		{% for s in searching %}
 			{% for artists in s['artists'] %}
 			<li>{{artists['name']}}</li>
 			{% endfor %}
 		{% endfor %}
-	</div>
+	</div> -->
 
 
 <!-- trie -->

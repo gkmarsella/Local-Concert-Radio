@@ -49,7 +49,9 @@
 
 			<div class="card-holder">
 	            <div class="card">
+                <img class="red-x" src="{{url_for('static', filename='images/red-x.png')}}" height="280px" width="280px">
 	            	<img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
+                <div class="card-button"><button class="delete-button">Remove from playlist</button><button class="event-button">Want to attend</button></div>
 	            	<div class="sort-name">
 		            	{{s['artists'][0]['name']}} 
 		    {% for i in range(1, (s['artists'])| length) %}
