@@ -1,18 +1,69 @@
 {% extends 'base.html' %}
 {% block content %}
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">LOGO</a>
+    </div>
 
-		<iframe src={{spotify_player_source}} width="300" height="380" frameborder="0" allowtransparency="true"></iframe>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+<!--         <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li> -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">User <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Hide genres</a></li>
+            <li><a href="#">Hide artists</a></li>
+            <li><a href="#">Hide venues</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Favorited events</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav">
+      </ul>
+    </div>
+  </div>
+</nav>
+		
 
-        {% for s in search_bid %}
-            {% for artists in s['artists'] %}
-	            <ul>
-	                <li>{{artists['name']}}</li>
-	                <li>CITY: {{s['venue']['city']}}</li>
-	                <li>VENUE: {{s['venue']['name']}}</li>
-	                <li>DATE: {{s['datetime']}}</li>
-	            </ul>
-            {% endfor %}
-        {% endfor %}
+<iframe src={{spotify_player_source}} width="100%" height="325" frameborder="0" allowtransparency="true"></iframe>
+
+
+    {% for s in search_bid%}
+        <div class="card-holder">
+            <div class="card">
+                <img class="red-x" src="{{url_for('static', filename='images/red-x.png')}}" height="280px" width="280px">
+                <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
+                <div class="card-button"><button class="delete-button">Remove from playlist</button><button class="event-button">Want to attend</button></div>
+                <div class="sort-name">
+                {{s['artists'][0]['name']}} 
+                    {% for i in range(1, (s['artists'])| length) %}
+                        {% if i %}
+                            Featuring:
+                            <div>{{s['artists'][i]['name']}}</div>
+                        {% endif %}
+                    {% endfor %} 
+                </div>
+                <div class="sort-city">
+                    CITY: {{s['venue']['city']}} 
+                </div>
+                <div class="sort-venue">
+                    VENUE: {{s['venue']['name']}}
+                </div> 
+                <div class="sort-date">
+                    DATE: {{s['datetime']}}
+                </div> 
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
-
-

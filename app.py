@@ -285,19 +285,17 @@ def sort():
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
-    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
-    # Getting list from bands in town
-    # BEFORE SORT
-    # search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius')).json()
-    # AFTER SORT
-    search_bid = json.loads(request.form.get('ids'))
 
-    # Creating a new playlist
+    # Getting user ID to create a playlist
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
     create_playlist()
+
+    search_bid = json.loads(request.form.get('ids'))
 
 
     #Getting new playlist id
     playlist_id = user_playlists().data['items'][0]['id']
+
     
     # creating a list of all the artists
     artist_names = []
@@ -348,7 +346,19 @@ def results():
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source)
+    def images(name):
+        try:
+            get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
+            get_image = get_image.json()['image_url']
+        except json.decoder.JSONDecodeError:
+            return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
+        return get_image
+
+    first_artist = {}
+    for s in search_bid:
+        first_artist.update({s['id']:images(s['artists'][0]['name'])})
+
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist)
 
 
 if os.environ.get('ENV') == 'production':
