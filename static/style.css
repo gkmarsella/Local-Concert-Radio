@@ -1,4 +1,4 @@
-form {
+.search-form {
 	margin: 20px;
 	padding: 20px;
 	display: block;
@@ -57,6 +57,9 @@ h3 {
 	visibility: hidden;
 }
 
+header {
+	margin-top: 110px;
+}
 
 /*Sort Cards*/
 
@@ -110,4 +113,25 @@ h3 {
 
 iframe {
 	margin-top: 50px;
+}
+
+
+
+
+/*NAVBAR*/
+
+.create-playlist {
+	width: 350px;
+}
+
+
+.fav-event {
+	height: auto;
+	max-height: 300px;
+	overflow-x: visible;
+	overflow-y: scroll;
+}
+
+.delete-fav {
+	position: absolute;
 }

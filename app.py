@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, g
 from flask_modus import Modus
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -9,7 +9,7 @@ import string
 from requests.utils import quote
 import json
 
-
+# zindex for red x
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
@@ -128,10 +128,11 @@ class Event(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     event = db.Column(db.Text)
+    name = db.Column(db.Text)
 
-    def __init__(self, event):
+    def __init__(self, event, name):
         self.event = event
-
+        self.name = name
 
 
 
@@ -185,14 +186,18 @@ def spotify_authorized():
 
     # store the token in the session
     session['oauth_token'] = (resp['access_token'], '')
-    me = spotify.get('/me')
+    # me = spotify.get('/me')
 
     user_id = spotify.get("https://api.spotify.com/v1/me").data
 
+
+
     if User.query.filter_by(user_name=user_id['id']).first() is None:
-        user_id['id'] = User(user_id['id'], user_id['email'])
-        db.session.add(user_id['id'])
+        new_user = User(user_id['id'], user_id['email'])
+        db.session.add(new_user)
         db.session.commit()
+
+    session['user_name'] = user_id['id']
 
     # Save some info to the DB
     return render_template("search.html")
@@ -257,10 +262,48 @@ def user_playlists():
 # ************************************************************************************************************************
 #                                               REQUESTS
 # ************************************************************************************************************************
+@app.route('/event', methods=["POST"])
+def event():
+
+    name = request.json['name']
+    event = request.json['event']
+
+    get_user = User.query.filter_by(user_name=session['user_name']).first()
+
+    if get_user is None:
+        return jsonify({}), 401
+
+
+    artist_event = Event.query.filter_by(name=name).first()
+
+
+    if artist_event is None:
+        artist_event = Event(event, name)
+        db.session.add(artist_event)
+        db.session.commit()
+
+
+    get_user.events.append(artist_event)
+    db.session.add(get_user)
+    db.session.commit()
+
+
+    return jsonify({'id': artist_event.id, 'name': artist_event.name, 'event': artist_event.event})
+
+
+
+def db_to_favorites():
+    get_user = User.query.filter_by(user_name=session['user_name']).first()
+
+    g.events = get_user.events
+
+
 
 @app.route('/search', methods=["GET"])
 def search():
+    db_to_favorites()
     return render_template("search.html")
+    
 
 @app.route('/sort', methods=["GET"])
 def sort():
@@ -279,12 +322,14 @@ def sort():
     for s in search_bands:
         first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
+    db_to_favorites()    
 
     return render_template("sort.html", search_bands=search_bands, first_artist=first_artist, search_data=json.dumps(search_bands))
 
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
+    db_to_favorites()
 
     # Getting user ID to create a playlist
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
