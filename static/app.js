@@ -49,7 +49,7 @@ $(function(){
 	});
 
 	$(".delete-fav").click(function(e){
-		$(this).parent('fav-li').addClass("DELETE")
+		$(this).parent('.fav-li').addClass("DELETE")
 	});
 
 
