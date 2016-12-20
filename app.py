@@ -21,9 +21,16 @@ app.secret_key = 'development'
 oauth = OAuth(app)
 modus = Modus(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/local-playlist'
+if os.environ.get('ENV') == 'production':
+    debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+
+else:
+    debug = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://localhost/local-playlist'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'secret'
 db = SQLAlchemy(app)
 SPOTIFY_CLIENT_ID = app.config['SPOTIFY_CLIENT_ID'] = os.environ.get('SPOTIFY_CLIENT_ID')
 SPOTIFY_CLIENT_SECRET = app.config['SPOTIFY_CLIENT_SECRET'] = os.environ.get('SPOTIFY_CLIENT_SECRET')
@@ -406,12 +413,7 @@ def results():
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist)
 
 
-if os.environ.get('ENV') == 'production':
-    debug = False
 
-else:
-    debug = True
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 
 
 
