@@ -323,7 +323,7 @@ def sort():
         try:
             get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
             get_image = get_image.json()['image_url']
-        except json.decoder.JSONDecodeError:
+        except (json.decoder.JSONDecodeError, KeyError) as e:
             return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
         return get_image
 
