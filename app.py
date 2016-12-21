@@ -352,11 +352,14 @@ def results():
 
     
     # creating a list of all the artists
+    s_count = 0
     artist_names = []
-    for s in search_bid:
-        if 'artists' in s: 
-            for x in s['artists']:
-                artist_names.append(search_artists(x['name']).data)
+    while (s_count < 10):
+        for s in search_bid:
+            if 'artists' in s: 
+                for x in s['artists']:
+                    artist_names.append(search_artists(x['name']).data)
+                    s_count = s_count + 1
 
 
 
@@ -380,22 +383,20 @@ def results():
 # {k:v for k,v in artist_dict2.items() if k in sorted([k for k,v in artist_dict2.items()])}
 
     # searching all artists given for top tracks
-    o_count = 0
+
     obj_tracks = []
-    while (o_count < 10):
-        for i in names_no_feat.values():
-            obj_tracks.append(top_tracks(i))
-            o_count = o_count + 1
+    for i in names_no_feat.values():
+        obj_tracks.append(top_tracks(i))
 
 
     # getting a list of one song each from each artists top tracks
-    t_count = 0
+
     track_id = []
-    while(t_count < 10):
-        for i in obj_tracks:
-            if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
-                track_id.append(i.data['tracks'][0]['id'])
-                t_count = t_count + 1
+
+    for i in obj_tracks:
+        if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
+            track_id.append(i.data['tracks'][0]['id'])
+
 
     # adding songs to playlist
     count = 0
