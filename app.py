@@ -237,6 +237,7 @@ def create_playlist():
         chars = list(string.ascii_lowercase + string.digits)
         return ''.join(random.choice(chars) for _ in range(size))
 
+
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
     new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
@@ -414,13 +415,14 @@ def results():
     # for s in search_bid:
     #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
 
 
 
 @app.route('/get_tracks', methods=["GET", "POST"])
 def get_tracks():
 
+    user_id = session['user_name']
 
     playlist_id = user_playlists().data['items'][0]['id']
 
@@ -430,10 +432,13 @@ def get_tracks():
 
 
     if 'tracks' in name and (len(name['tracks'])) > 0:
-        add_song(playlist_id, name['tracks']['items'][0]['id'])
+        if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
+            add_song(playlist_id, name['tracks']['items'][0]['id'])
+
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
 
-    return jsonify()
+    return jsonify({'url':spotify_player_source})
 
 if __name__ == '__main__':
     app.run(debug=debug,port=3000)
