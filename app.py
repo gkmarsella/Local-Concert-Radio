@@ -386,10 +386,13 @@ def results():
 
 
     # getting a list of one song each from each artists top tracks
+    t_count = 0
     track_id = []
     for i in obj_tracks:
-        if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
-            track_id.append(i.data['tracks'][0]['id'])
+        while(t_count < 5):
+            if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
+                track_id.append(i.data['tracks'][0]['id'])
+                t_count = t_count + 1
 
     # adding songs to playlist
     count = 0
