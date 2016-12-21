@@ -383,7 +383,7 @@ def results():
     o_count = 0
     obj_tracks = []
     for i in names_no_feat.values():
-        while (o_count < 5):
+        while (o_count < 20):
             obj_tracks.append(top_tracks(i))
             o_count = o_count + 1
 
@@ -392,7 +392,7 @@ def results():
     t_count = 0
     track_id = []
     for i in obj_tracks:
-        while(t_count < 5):
+        while(t_count < 20):
             if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
                 track_id.append(i.data['tracks'][0]['id'])
                 t_count = t_count + 1
@@ -400,7 +400,7 @@ def results():
     # adding songs to playlist
     count = 0
     for i in track_id:
-        while (count < 10):
+        while (count < 20):
             add_song(playlist_id, i)
             count = count + 1
 
