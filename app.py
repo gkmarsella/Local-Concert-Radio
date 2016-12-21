@@ -392,8 +392,11 @@ def results():
             track_id.append(i.data['tracks'][0]['id'])
 
     # adding songs to playlist
+    count = 0
     for i in track_id:
-        add_song(playlist_id, i)
+        while (count < 10):
+            add_song(playlist_id, i)
+            count = count + 1
 
 
 
