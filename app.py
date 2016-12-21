@@ -252,7 +252,7 @@ def top_tracks(id):
     # gettop.data['tracks'][0]['id']
 
 def add_song(playlist, song):
-
+    print(spotify.get("https://api.spotify.com/v1/me").data)
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
     return spotify.post("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists/" +  quote(playlist, safe='') + "/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
