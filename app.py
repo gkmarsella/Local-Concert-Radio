@@ -157,7 +157,7 @@ spotify = oauth.remote_app(
     # Change the scope to match whatever it us you need
     # list of scopes can be found in the url below
     # https://developer.spotify.com/web-api/using-scopes/
-    request_token_params={'scope': 'user-read-private user-read-email'},
+    request_token_params={'scope': 'user-read-private user-read-email playlist-modify playlist-modify-private'},
     base_url='https://accounts.spotify.com',
     request_token_url=None,
     access_token_url='/api/token',
