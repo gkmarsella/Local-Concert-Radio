@@ -380,9 +380,12 @@ def results():
 # {k:v for k,v in artist_dict2.items() if k in sorted([k for k,v in artist_dict2.items()])}
 
     # searching all artists given for top tracks
+    o_count = 0
     obj_tracks = []
     for i in names_no_feat.values():
-        obj_tracks.append(top_tracks(i))
+        while (o_count < 5):
+            obj_tracks.append(top_tracks(i))
+            o_count = o_count + 1
 
 
     # getting a list of one song each from each artists top tracks
