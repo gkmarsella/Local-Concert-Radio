@@ -418,9 +418,17 @@ def results():
             return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
         return get_image
 
+
     first_artist = {}
-    for s in search_bid:
-        first_artist.update({s['id']:images(s['artists'][0]['name'])})
+    for s in search_bid[:10]:
+        if 'artists' in s:
+            for x in s['artists']:
+                first_artist.update({s['id']:images(s['artists'][0]['name'])})
+
+
+    # first_artist = {}
+    # for s in search_bid:
+    #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist)
 
