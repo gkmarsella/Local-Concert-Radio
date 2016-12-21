@@ -240,7 +240,7 @@ def create_playlist():
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
     new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
-    return render_template("results.html", new_playlist=new_playlist)
+    return new_playlist
 
 
 def search_artists(artist):
@@ -250,6 +250,9 @@ def search_artists(artist):
 def top_tracks(id):
     return spotify.get("https://api.spotify.com/v1/artists/" +  quote(id, safe='') +"/top-tracks?country=SE", headers={"Accept": 'application/json', "Authorization":"Bearer"})
     # gettop.data['tracks'][0]['id']
+
+def wild_card(name):
+    return spotify.get("https://api.spotify.com/v1/search?q=" +  quote(name, safe='')  + "&type=track&limit=1", headers={"Accept": 'application/json', "Authorization":"Bearer"})
 
 def add_song(playlist, song):
 
@@ -343,7 +346,6 @@ def results():
     # Getting user ID to create a playlist
     user_id = session['user_name']
     create_playlist()
-
     search_bid = json.loads(request.form.get('ids'))
 
 
@@ -352,14 +354,11 @@ def results():
 
     
     # creating a list of all the artists
-    s_count = 0
     artist_names = []
-    while (s_count < 10):
-        for s in search_bid:
-            if 'artists' in s: 
-                for x in s['artists']:
-                    artist_names.append(search_artists(x['name']).data)
-                    s_count = s_count + 1
+    for s in search_bid:
+        if 'artists' in s: 
+            for x in s['artists']:
+                artist_names.append(search_artists(x['name']).data)
 
 
 
@@ -380,30 +379,15 @@ def results():
     # removing duplicate names
 
 
-# {k:v for k,v in artist_dict2.items() if k in sorted([k for k,v in artist_dict2.items()])}
+    # {k:v for k,v in artist_dict2.items() if k in sorted([k for k,v in artist_dict2.items()])}
 
     # searching all artists given for top tracks
 
-    obj_tracks = []
-    for i in names_no_feat.values():
-        obj_tracks.append(top_tracks(i))
+    # obj_tracks = []
+    # for i in names_no_feat.values():
+    #     obj_tracks.append(top_tracks(i))
 
 
-    # getting a list of one song each from each artists top tracks
-
-    track_id = []
-
-    for i in obj_tracks:
-        if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
-            track_id.append(i.data['tracks'][0]['id'])
-
-
-    # adding songs to playlist
-    count = 0
-    while (count < 10):
-        for i in track_id:
-            add_song(playlist_id, i)
-            count = count + 1
 
 
 
@@ -430,13 +414,26 @@ def results():
     # for s in search_bid:
     #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat)
 
 
 
+@app.route('/get_tracks', methods=["GET", "POST"])
+def get_tracks():
+
+
+    playlist_id = user_playlists().data['items'][0]['id']
+
+
+    name = wild_card(request.json['artist']).data
 
 
 
+    if 'tracks' in name and (len(name['tracks'])) > 0:
+        add_song(playlist_id, name['tracks']['items'][0]['id'])
+
+
+    return jsonify()
 
 if __name__ == '__main__':
     app.run(debug=debug,port=3000)
