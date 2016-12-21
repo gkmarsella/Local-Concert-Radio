@@ -382,8 +382,8 @@ def results():
     # searching all artists given for top tracks
     o_count = 0
     obj_tracks = []
-    for i in names_no_feat.values():
-        while (o_count < 20):
+    while (o_count < 20):
+        for i in names_no_feat.values():
             obj_tracks.append(top_tracks(i))
             o_count = o_count + 1
 
@@ -391,16 +391,16 @@ def results():
     # getting a list of one song each from each artists top tracks
     t_count = 0
     track_id = []
-    for i in obj_tracks:
-        while(t_count < 20):
+    while(t_count < 20):
+        for i in obj_tracks:
             if 'tracks' in i.data and (len(i.data['tracks'])) > 0:
                 track_id.append(i.data['tracks'][0]['id'])
                 t_count = t_count + 1
 
     # adding songs to playlist
     count = 0
-    for i in track_id:
-        while (count < 20):
+    while (count < 20):
+        for i in track_id:
             add_song(playlist_id, i)
             count = count + 1
 
