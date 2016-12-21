@@ -341,7 +341,7 @@ def results():
     db_to_favorites()
 
     # Getting user ID to create a playlist
-    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+    user_id = session['user_name']
     create_playlist()
 
     search_bid = json.loads(request.form.get('ids'))
