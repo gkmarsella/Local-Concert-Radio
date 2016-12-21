@@ -237,7 +237,7 @@ def create_playlist():
         chars = list(string.ascii_lowercase + string.digits)
         return ''.join(random.choice(chars) for _ in range(size))
 
-    user_id = session['user_name']
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
     new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
     return render_template("results.html", new_playlist=new_playlist)
@@ -262,7 +262,7 @@ def add_song(playlist, song):
 
 
 def user_playlists():
-    user_id = session['user_name']
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
     return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # userplaylists.data['items'][0]['id']
