@@ -5,6 +5,9 @@ $(function(){
 		$(".loading").removeClass("loading");
 	});
 
+	$(".create-playlist").click(function(e){
+		$(".loading-playlist ").removeClass("loading-playlist ");
+	});
 
 	// Adds a class to artist when delete from playlist button is pressed
 	$(".delete-button").click(function(e){

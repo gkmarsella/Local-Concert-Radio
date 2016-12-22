@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<script>document.write('<style>.create-playlist { display: none; }</style>');</script>
 
 
 
@@ -13,7 +13,7 @@
 
 	<div id="search-form">
 		<form action="{{url_for('sort')}}" method="GET">
-			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city" value="Providence">
+			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city">
 			<select name="search-state" id="state">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
@@ -54,7 +54,7 @@
 				<option value="OK">Oklahoma</option>
 				<option value="OR">Oregon</option>
 				<option value="PA">Pennsylvania</option>
-				<option value="RI" selected="selected">Rhode Island</option>
+				<option value="RI">Rhode Island</option>
 				<option value="SC">South Carolina</option>
 				<option value="SD">South Dakota</option>
 				<option value="TN">Tennessee</option>
@@ -67,14 +67,14 @@
 				<option value="WI">Wisconsin</option>
 				<option value="WY">Wyoming</option>
 			</select>
-		<input id="radius" class="searchbar" type="number" name="search-radius" placeholder="Enter a radius" value="5">
-		<input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when" value="2016-12-26">
-		<input id="date-end" class="searchbar" type="date" name="search-date-end" placeholder="To when" value="2016-12-30">
-		<input id="submitbutton" type="submit" value="Generate playlist">
+		<input id="radius" class="searchbar" type="number" name="search-radius" placeholder="Enter a radius">
+		<input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when">
+		<input id="date-end" class="searchbar" type="date" name="search-date-end" placeholder="To when">
+		<input id="submitbutton" type="submit" value="Search Artists">
 		</div>
 	</form>
 	<div class="loading">
-		<h2>Creating your playlist. This can take a few minutes.</h2>
+		<h2>Finding artists</h2>
 		<img class="loading" src="{{url_for('static', filename='images/loading-bar.gif')}}">
 	</div>
 	

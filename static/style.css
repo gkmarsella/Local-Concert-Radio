@@ -135,3 +135,12 @@ iframe {
 .delete-fav {
 	position: absolute;
 }
+
+.loading-playlist {
+   display: none;
+   visibility: hidden;
+ }
+
+ .loading-style{
+ 	margin-top: 55px;
+ }
