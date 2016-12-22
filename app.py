@@ -266,7 +266,7 @@ def add_song(playlist, song):
 
 
 def user_playlists():
-    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+    user_id = session['user_name']
 
     return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # userplaylists.data['items'][0]['id']
