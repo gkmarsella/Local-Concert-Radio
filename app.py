@@ -266,7 +266,7 @@ def add_song(playlist, song):
 
 
 def user_playlists():
-    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+    user_id = session['user_name']
 
     return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
     # userplaylists.data['items'][0]['id']
@@ -414,6 +414,7 @@ def results():
     # first_artist = {}
     # for s in search_bid:
     #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
+
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
 
