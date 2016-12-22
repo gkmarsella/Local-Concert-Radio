@@ -3,10 +3,12 @@ $(function(){
 
 
 	$.when.apply($, $('ul.hidden').children().map(function(i, el){
+		var dataObj = $(el).data();
+		dataObj.playlist = $(".pid").data("playlist");
 		return $.ajax({
 			type: "POST",
 			url: "/get_tracks",
-			data: JSON.stringify(($(el).data())),
+			data: JSON.stringify(dataObj),
 			contentType: 'application/json',
 			dataType: 'json'
 		})

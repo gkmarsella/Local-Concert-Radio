@@ -430,7 +430,7 @@ def get_tracks():
 
     user_id = session['user_name']
 
-    playlist_id = user_playlists().data['items'][0]['id']
+    playlist_id = request.json['playlist']
 
 
     name = wild_card(request.json['artist']).data
@@ -439,7 +439,7 @@ def get_tracks():
 
     if 'tracks' in name and (len(name['tracks'])) > 0:
         if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
-            time.sleep(0.25)
+            time.sleep(0.5)
             add_song(playlist_id, name['tracks']['items'][0]['id'])
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
