@@ -442,7 +442,7 @@ def get_tracks():
             time.sleep(0.5)
             add_song(playlist_id, name['tracks']['items'][0]['id'])
 
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
 
 
     return jsonify({'url':spotify_player_source})

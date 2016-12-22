@@ -14,7 +14,7 @@ $(function(){
 		})
 	})).then(function(data){
 		console.log("URL", data[0].url)
-		$("#spotify_player").append('<iframe src="' + data[0].url + '" width="100%" height="325" frameborder="0" allowtransparency="true"></iframe>')
+		$("#spotify_player").append('<iframe src="' + decodeURIComponent(data[0].url) + '" width="100%" height="325" frameborder="0" allowtransparency="true"></iframe>')
 	})
 
 
