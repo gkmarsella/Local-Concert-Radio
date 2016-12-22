@@ -361,10 +361,9 @@ def results():
     
     # creating a list of all the artists
     artist_names = []
-    for s in search_bid:
+    for s in search_bid[:10]:
         if 'artists' in s: 
             for x in s['artists']:
-                time.sleep(0.3)
                 artist_names.append(search_artists(x['name']).data)
 
 
@@ -422,7 +421,7 @@ def results():
     #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat[:10], user_id=user_id, playlist_id=playlist_id)
 
 
 
@@ -440,7 +439,6 @@ def get_tracks():
 
     if 'tracks' in name and (len(name['tracks'])) > 0:
         if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
-            time.sleep(0.3)
             add_song(playlist_id, name['tracks']['items'][0]['id'])
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
