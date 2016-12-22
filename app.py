@@ -421,7 +421,7 @@ def results():
     #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat[:10], user_id=user_id, playlist_id=playlist_id)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
 
 
 
