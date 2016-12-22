@@ -364,6 +364,7 @@ def results():
     for s in search_bid:
         if 'artists' in s: 
             for x in s['artists']:
+                time.sleep(0.3)
                 artist_names.append(search_artists(x['name']).data)
 
 
