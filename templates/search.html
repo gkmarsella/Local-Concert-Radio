@@ -7,14 +7,14 @@
 
 
 
-	<header>Local Concert Radio</header>
-	<h3>stream music from bands playing in your area</h3>
+	<header align="center">Local Concert Radio</header>
+	<h3 align="center">stream music from bands playing in your area</h3>
 
 
-	<div id="search-form">
+	<div align="center" id="search-form">
 		<form action="{{url_for('sort')}}" method="GET">
 			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city">
-			<select name="search-state" id="state">
+			<select name="search-state" id="state" class="searchbar">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -68,8 +68,8 @@
 				<option value="WY">Wyoming</option>
 			</select>
 		<input id="radius" class="searchbar" type="number" name="search-radius" placeholder="miles radius around city">
-		<div style="position: absolute; margin-left: 185px;">From when</div><input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when">
-		<div style="position: absolute; margin-left: 185px;">To when</div><input id="date-end" class="searchbar" type="date" name="search-date-end" placeholder="To when">
+		<input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when">
+		<input id="date-end" class="searchbar" type="date" name="search-date-end" placeholder="To when">
 		<input id="submitbutton" type="submit" value="Search Artists">
 		</div>
 	</form>

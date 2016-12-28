@@ -420,6 +420,18 @@ def results():
     # for s in search_bid:
     #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
+    # track_uris = []
+    # for i in artist_names:
+    #     for k in i['artists']['items']:
+    #         track_uris.append()
+
+    # track_string = ','.join(track_uris)
+
+    # try_hundred = spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists/7mvpNCfTBMSiTCA2EvHw01/tracks", headers={"Accept": 'application/json', "Authorization": "Bearer"})
+
+
+
+
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
 

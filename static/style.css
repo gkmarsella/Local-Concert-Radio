@@ -1,3 +1,17 @@
+body {
+	background-color: black;
+	font-family: 'Roboto', sans-serif;
+	color: white;
+}
+
+
+
+/*search form box*/
+
+.searchbar {
+	color: black;
+}
+
 .search-form {
 	margin: 20px;
 	padding: 20px;
@@ -6,51 +20,58 @@
 	width: 50%
 }
 
+/*Search form*/
+
 #city {
 	display: block;
 	margin: 8px;
 	width: 170px;
+	margin: 20px
 }
 
 #state {
 	display: block;
 	margin: 8px;
 	width: 170px;
+	margin: 20px;
 }
+
+
 
 #radius {
 	display: block;
 	margin: 8px;
 	width: 170px;
+	margin: 20px;
 }
 
 #date-start {
 	display: block;
 	margin: 8px;
 	width: 170px;
+	margin: 20px;
 }
 
 #date-end {
 	display: block;
 	margin: 8px;
 	width: 170px;
+	margin: 20px;
 }
 
 #submitbutton {
 	display: block;
 	margin: 8px;
 	width: 170px;
+	margin: 20px;
+	background-color: #6AE368;
 }
 
-header {
-	font-size: 60px;
-	margin-left: 300px;
-	display: block;
-}
 
-h3 {
+
+/*h3 {
 	margin-left: 322px;
-}
+}*/
 
 .loading {
 	display: none;
@@ -59,6 +80,9 @@ h3 {
 
 header {
 	margin-top: 110px;
+	font-size: 60px;
+	color: white;
+	font-family: 'Monoton';
 }
 
 /*Sort Cards*/
