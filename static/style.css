@@ -123,6 +123,7 @@ header {
 	width: 100%;
 	left: 0;
 	height: 20px;
+	z-index: 100;
 }
 
 .card-holder {

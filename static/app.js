@@ -52,7 +52,18 @@ $(function(){
 	});
 
 	$(".delete-fav").click(function(e){
-		$(this).parent('.fav-li').addClass("DELETE")
+		$(this).parent().siblings(".divider").eq(0).remove()		
+		$(this).parent('.fav-li').remove()
+
+		var listId = $(this).parent(".fav-li").data()
+		// $.ajax({
+		// 	type: "POST",
+		// 	url: '/event',
+		// 	data: 'listId["id"]',
+		// 	success: function(msg){
+		// 		$(id).remove();
+		// 	}
+		// })
 		
 	});
 

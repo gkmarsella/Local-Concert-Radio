@@ -166,6 +166,8 @@ spotify = oauth.remote_app(
 )
 
 
+
+
 @app.route('/')
 def index():
     return redirect(url_for('login'))
