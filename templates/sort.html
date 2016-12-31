@@ -6,12 +6,13 @@
         <h2>Creating your playlist. This may take a few minutes.</h2>
         <img class="loading-playlist loading-style" src="{{url_for('static', filename='images/loading-bar.gif')}}">
     </div>
+    <div class="cards" align="center">
     {% for s in search_bands%}
 
-        <div class="card-holder">
+        <!-- <div class="card-holder"> -->
             <div class="card">
                 <img class="red-x" src="{{url_for('static', filename='images/red-x.png')}}" height="280px" width="280px">
-                <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
+                <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="250px">
                 <div class="card-button"><button class="delete-button">Remove from playlist</button><button class="event-button">Want to attend</button>
                 </div>
                 <div class="sort-name" data-url="{{s['ticket_url']}}">
@@ -37,7 +38,10 @@
                 </div>
 
             </div>
-        </div>
+        <!-- </div> -->
+    {% endfor %}    
+    </div>
 
-    {% endfor %}
+
+    
 {% endblock %}

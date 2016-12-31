@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
 	<script src="{{url_for('static', filename='app.js') }}"></script>
 </head>
+<!-- <body background="{{url_for('static', filename='images/concert1.jpg')}}" style="background-repeat: no-repeat; background-size: 100% 100%"> -->
 <body>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -58,7 +59,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="{{url_for('search')}}">Back to search</a></li>
       </ul>
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" style="position: absolute; left: 35%;">
       <li>
         <form class="nav navbar-form" name="search-sort" action="{{url_for('results')}}" method="POST">
         <input type="hidden" name="ids" value="{{search_data}}">

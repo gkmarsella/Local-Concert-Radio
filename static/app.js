@@ -34,15 +34,15 @@ $(function(){
 			contentType: 'application/json',
 			dataType: 'json'
 		}).done(function(data){
-			var addArtist = data.name
-			var addEvent = data.event
+			var addArtist = data.name;
+			var addEvent = data.event;
 
 			var eventList = $('.fav-event').children()
 			var notInList = false
 			for(var i=0; i < eventList.length; i++){
 				if($(eventList[i]).data('id') === data.id){
-					notInList = true
-					break
+					notInList = true;
+					break;
 				}
 			}
 			if(notInList === false){
@@ -52,10 +52,10 @@ $(function(){
 	});
 
 	$(".delete-fav").click(function(e){
-		$(this).parent().siblings(".divider").eq(0).remove()		
-		$(this).parent('.fav-li').remove()
+		$(this).parent().siblings(".divider").eq(0).remove();		
+		$(this).parent('.fav-li').remove();
 
-		var listId = $(this).parent(".fav-li").data()
+		var listId = $(this).parent(".fav-li").data();
 		// $.ajax({
 		// 	type: "POST",
 		// 	url: '/event',
