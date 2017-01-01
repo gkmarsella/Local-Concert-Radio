@@ -16,11 +16,12 @@
     </ul>
 
 
+    <div class="cards" align="center">
     {% for s in search_bid%}
-        <div class="card-holder">
+        <!-- <div class="card-holder"> -->
             <div class="card">
                 <img class="red-x" src="{{url_for('static', filename='images/red-x.png')}}" height="280px" width="280px">
-                <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
+                <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="250px">
                 <div class="card-button"><button class="delete-button">Remove from playlist</button><button class="event-button">Want to attend</button></div>
                 <div class="sort-name">
                 {{s['artists'][0]['name']}} 
@@ -44,7 +45,8 @@
                     <a href="{{s['ticket_url']}}" target="_blank">Buy Tickets</a>
                 </div> 
             </div>
-        </div>
+        <!-- </div> -->
     {% endfor %}
+    </div>
       <script src="{{url_for('static', filename='tracks.js') }}"></script>
 {% endblock %}
