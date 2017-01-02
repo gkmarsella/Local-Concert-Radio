@@ -210,6 +210,7 @@ def spotify_authorized():
     session['user_name'] = user_id['id']
 
     # Save some info to the DB
+    db_to_favorites()
     return render_template("search.html")
 
 
@@ -310,11 +311,16 @@ def event():
 
     return jsonify({'id': artist_event.id, 'name': artist_event.name, 'event': artist_event.event})
 
+@app.route('/event/<id>', methods=["DELETE"])
+def delete_event(id):
+    event = Event.query.get(id)
+    db.session.delete(event)
+    db.session.commit()
+    return jsonify({'event':event.id})
 
 
 def db_to_favorites():
     get_user = User.query.filter_by(user_name=session['user_name']).first()
-
     g.events = get_user.events
 
 

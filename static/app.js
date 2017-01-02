@@ -52,18 +52,15 @@ $(function(){
 	});
 
 	$(".delete-fav").click(function(e){
-		$(this).parent().siblings(".divider").eq(0).remove();		
-		$(this).parent('.fav-li').remove();
-
-		var listId = $(this).parent(".fav-li").data();
-		// $.ajax({
-		// 	type: "POST",
-		// 	url: '/event',
-		// 	data: 'listId["id"]',
-		// 	success: function(msg){
-		// 		$(id).remove();
-		// 	}
-		// })
+		var listId = $(this).parent(".fav-li").data('id');
+		$.ajax({
+			type: "DELETE",
+			url: '/event/' + listId,
+			success: function(msg){
+				$(e.target).parent().siblings(".divider").eq(0).remove();		
+				$(e.target).parent('.fav-li').remove();
+			}
+		})
 		
 	});
 

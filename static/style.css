@@ -16,8 +16,14 @@ body {
 	margin: 20px;
 	padding: 20px;
 	display: block;
-	float: left;
-	width: 50%
+	width: 50%;
+	margin-top: 74px;
+    background-color: rgba(15, 17, 1, 0.32);
+    background-size: 10px;
+    width: 244px;
+    margin-left: auto;
+    padding: 20px;
+    margin-right: auto;
 }
 
 /*Search form*/
@@ -69,9 +75,9 @@ body {
 
 
 
-/*h3 {
-	margin-left: 322px;
-}*/
+h3 {
+    text-shadow: 6px -4px 3px rgba(0, 0, 0, 0.3);
+}
 
 .loading {
 	display: none;
@@ -83,6 +89,7 @@ header {
 	font-size: 60px;
 	color: green;
 	font-family: 'Monoton';
+	text-shadow: 6px -4px 3px rgba(0, 0, 0, 0.3);
 }
 
 /*Sort Cards*/
@@ -91,7 +98,7 @@ header {
 	display: inline-block;
 	margin: 15px;
 	background-color: rgba(72, 78, 85, 0.58);
-	width: 250px;
+	width: 300px;
 	height: 500px;
 }
 
@@ -143,6 +150,10 @@ iframe {
 
 
 /*NAVBAR*/
+
+#top-divider{
+	margin-bottom: 60px;
+}
 
 .create-playlist {
 	width: 350px;

@@ -12,9 +12,12 @@
 
 
 	<div align="center" id="search-form">
-		<form action="{{url_for('sort')}}" method="GET">
-			<input id="city" class="searchbar" type="text" name="search-city" placeholder="Enter a city">
-			<select name="search-state" id="state" class="searchbar">
+		<form action="{{url_for('sort')}}" method="GET" class="search-form">
+			<div class="form-group">	
+       			<input id="city" class="searchbar form-control" type="text" name="search-city" placeholder="Enter a city">
+  			</div>
+  			<div class="form-group">
+			<select name="search-state" id="state" class="searchbar form-control">
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -67,10 +70,19 @@
 				<option value="WI">Wisconsin</option>
 				<option value="WY">Wyoming</option>
 			</select>
-		<input id="radius" class="searchbar" type="number" name="search-radius" placeholder="miles radius around city">
-		<input id="date-start" class="searchbar" type="date" name="search-date-start" placeholder="From when">
-		<input id="date-end" class="searchbar" type="date" name="search-date-end" placeholder="To when">
-		<input id="submitbutton" type="submit" value="Search Artists">
+			</div>
+		<div class="form-group">
+		<input id="radius" class="searchbar form-control" type="number" name="search-radius" placeholder="miles radius around city">
+		</div>
+		<div class="form-group">
+		<input id="date-start" class="searchbar form-control" type="text" name="search-date-start" placeholder="From when" onfocus="(this.type='date')" onblur="(this.type='text')">
+		</div>
+		<div class="form-group">
+		<input id="date-end" class="searchbar form-control" type="text" name="search-date-end" placeholder="To when" onfocus="(this.type='date')" onblur="(this.type='text')">
+		</div>
+		<div class="form-group">
+		<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
+		</div>
 		</div>
 	</form>
 	<div class="loading">
