@@ -33,13 +33,14 @@
                 </div> 
                 <hr>
                 <div class="card-button">
-                    <input class="heart" type="image" src="{{url_for('static', filename='images/Heart-green.png')}}" style="height: 30px;">
-                    <a href="{{s['ticket_url']}}" target="_blank"><img src="{{url_for('static', filename='images/bwticket.png')}}" style="height:100px; width:100px;"></a>                    
-                    <input class="card-x" type="image" src="{{url_for('static', filename='images/x-icon.png')}}">
+                    <input class="event-button" type="image" src="{{url_for('static', filename='images/Heart-green.png')}}" style="height: 30px;">
+                    <!-- <div class="ticket"> <a href="{{s['ticket_url']}}" target="_blank"><img src="{{url_for('static', filename='images/bwticket.png')}}" style="height:100px; width:100px;"></a></div>                     -->
+                    <input class="delete-button" type="image" src="{{url_for('static', filename='images/x-icon.png')}}">
                 </div>
             </div>
         <!-- </div> -->
-    {% endfor %}    
+    {% endfor %} 
+    </div>   
     </div>
 
 
