@@ -46,11 +46,13 @@ $(function(){
 				}
 			}
 			if(notInList === false){
-				$(".fav-event").append('<li class="fav-li" data-id="' + data.id + '">' + '<img src="static/images/x-icon.png" class="delete-fav">' + '<a href="' + addEvent + '" target="_blank">' + addArtist + "</a></li>" + '<li class="divider"></li>')
+				$(".fav-event").append('<li class="fav-li" data-id="' + data.id + '">' + '<img src="static/images/x-icon.png" class="delete-fav">' + '<a href="' + addEvent + '" target="_blank" id="fav-a">' + addArtist + "</a></li>" + '<li class="divider"></li>')
 			}
 		});
 	});
 
+
+	// DELETE EVENTS
 	$(".fav-event").click(function(e){
 		if(e.target.className === "delete-fav"){
 			var listId = $(e.target).parent().data('id');
