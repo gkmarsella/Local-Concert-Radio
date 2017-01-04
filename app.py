@@ -348,7 +348,7 @@ def sort():
     for s in search_bands:
         first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
-    db_to_favorites()    
+    db_to_favorites()  
 
     return render_template("sort.html", search_bands=search_bands, first_artist=first_artist, search_data=json.dumps(search_bands))
 

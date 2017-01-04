@@ -148,22 +148,22 @@ iframe {
 .sort-city {
 	text-align: left;
     padding-left: 10px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .sort-venue {
 	text-align: left;
     padding-left: 10px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 .sort-date {
 	text-align: left;
     padding-left: 10px;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 /*Bottom of card*/

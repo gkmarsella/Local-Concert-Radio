@@ -22,14 +22,14 @@
                         {% endif %}
                     {% endfor %}  -->
                 </div>
-                <div class="sort-city">
-                    CITY: {{s['venue']['city']}} 
-                </div>
                 <div class="sort-venue">
-                    VENUE: {{s['venue']['name']}}
+                    @ {{s['venue']['name']}}
                 </div> 
+                <div class="sort-city">
+                    {{s['venue']['city']}}, {{s['venue']['region']}} 
+                </div>
                 <div class="sort-date">
-                    DATE: {{s['datetime']}}
+                    {{s['datetime'][5:10]}}-{{s['datetime'][0:4]}}
                 </div> 
                 <hr>
                 <div class="card-button">
