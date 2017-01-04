@@ -46,22 +46,23 @@ $(function(){
 				}
 			}
 			if(notInList === false){
-				$(".fav-event").append('<li data-id="' + data.id + '">' + '<div>' + "Remove from favorites" + '</div>' + '<a href="' + addEvent + '" target="_blank">' + addArtist + "</a></li>" + '<li class="divider"></li>')
+				$(".fav-event").append('<li class="fav-li" data-id="' + data.id + '">' + '<img src="static/images/x-icon.png" class="delete-fav">' + '<a href="' + addEvent + '" target="_blank">' + addArtist + "</a></li>" + '<li class="divider"></li>')
 			}
 		});
 	});
 
-	$(".delete-fav").click(function(e){
-		var listId = $(this).parent(".fav-li").data('id');
-		$.ajax({
-			type: "DELETE",
-			url: '/event/' + listId,
-			success: function(msg){
-				$(e.target).parent().siblings(".divider").eq(0).remove();		
-				$(e.target).parent('.fav-li').remove();
-			}
-		})
-		
+	$(".fav-event").click(function(e){
+		if(e.target.className === "delete-fav"){
+			var listId = $(e.target).parent().data('id');
+			$.ajax({
+				type: "DELETE",
+				url: '/event/' + listId,
+				success: function(msg){
+					$(e.target).parent().siblings(".divider").eq(0).remove();		
+					$(e.target).parent('.fav-li').remove();
+				}
+			});
+		};
 	});
 
 
