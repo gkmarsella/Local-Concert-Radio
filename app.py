@@ -170,7 +170,8 @@ spotify = oauth.remote_app(
 def home():
     return render_template('home.html')
 
-
+# https://accounts.spotify.com/authorize?response_type=code&client_id=cbf5f680095e4cf1be818db85e9ac229&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%3Fnext%3Dhttp%253A%252F%252Flocalhost%253A3000%252Fhome&scope=user-read-private+user-read-email+playlist-modify+playlist-modify-private
+# https://accounts.spotify.com/authorize?response_type=code&client_id=cbf5f680095e4cf1be818db85e9ac229&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&scope=user-read-private+user-read-email+playlist-modify+playlist-modify-private
 @app.route('/')
 def index():
     return redirect(url_for('login'))
@@ -180,7 +181,8 @@ def index():
 def login():
     callback = url_for(
         'spotify_authorized',
-        next=request.args.get('next') or request.referrer or None,
+        next=None,
+        #next=request.args.get('next') or request.referrer or None,
         _external=True
     )
     return spotify.authorize(callback=callback)
@@ -398,9 +400,6 @@ def results():
     names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
 
 
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
-
-
     def images(name):
         try:
             get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
@@ -428,7 +427,8 @@ def results():
 # spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/2YxAB72tuM3n8axPDRntfS/tracks?uris=spotify%3Atrack%3A6fpU5GrcCDromZqdJhRHzM,spotify%3Atrack%3A05iXKTIt8dIDaCZGAWZRiV", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
     spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/" + playlist_id + "/tracks?uris={}".format(track_string), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
 
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
+
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
 
@@ -446,10 +446,10 @@ def get_tracks():
 
 
 
-#     if 'tracks' in name and (len(name['tracks'])) > 0:
-#         if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
-#             time.sleep(0.5)
-#             add_song(playlist_id, name['tracks']['items'][0]['id'])
+    # if 'tracks' in name and (len(name['tracks'])) > 0:
+    #
+    #         time.sleep(0.5)
+    #         add_song(playlist_id, name['tracks']['items'][0]['id'])
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
 
