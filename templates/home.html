@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>HOME PAGE</h1>
-<a href="{{url_for('login')}}">LOGIN</a>
+<script>document.write('<style>.navbar { display: none; }</style>');</script>
+<img src="{{url_for('static', filename='images/spotlight.png')}}" style="position: absolute; margin-left: 68%;">
+<img src="{{url_for('static', filename='images/spotlight-right.png')}}" style="position: absolute; margin-left: 9%;">
+<h1 align="center">Welcome To</h1>
+<header align="center" style="margin-top: 190px;">Local Concert Radio</header>
+
+<div align="center" style="padding-top: 160px;"><form action="{{url_for('login')}}"><input class="btn btn-success" type="submit" value="Log in to start streaming music from bands playing in your area"></form></div>
 
 {% endblock %}
