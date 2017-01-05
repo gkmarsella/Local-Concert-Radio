@@ -372,7 +372,7 @@ def results():
     
     # creating a list of all the artists
     artist_names = []
-    for s in search_bid[:10]:
+    for s in search_bid[:100]:
         if 'artists' in s: 
             for x in s['artists']:
                 artist_names.append(search_artists(x['name']).data)
@@ -384,28 +384,18 @@ def results():
     for i in artist_names:
         if 'artists' in i and 'items' in i['artists']:
             for y in i['artists']['items']:
-                artist_dict.update({y['name']:y['id']}) 
+                artist_dict.update({y['name']:y['id']})
 
 
+    just_names = []
+    for i in artist_names:
+        if 'artists' in i and 'items' in i['artists']:
+            for y in i['artists']['items']:
+                just_names.append(y['name'])     
 
 
     # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
     names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
-
-
-    # removing duplicate names
-
-
-    # {k:v for k,v in artist_dict2.items() if k in sorted([k for k,v in artist_dict2.items()])}
-
-    # searching all artists given for top tracks
-
-    # obj_tracks = []
-    # for i in names_no_feat.values():
-    #     obj_tracks.append(top_tracks(i))
-
-
-
 
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
@@ -427,22 +417,18 @@ def results():
                 first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
 
-    # first_artist = {}
-    # for s in search_bid:
-    #     first_artist.update({s['id']:images(s['artists'][0]['name'])})
+    # trying to use wildcard to add 100 tracks at once
+    uri_list = [];
+    for i in just_names:
+        uri_list.append(wild_card(i).data['tracks']['items'][0]['uri'])
 
-    # track_uris = []
-    # for i in artist_names:
-    #     for k in i['artists']['items']:
-    #         track_uris.append()
+    track_uris = ','.join(uri_list)
+    track_string = track_uris.replace(':', '%3A')
 
-    # track_string = ','.join(track_uris)
+# spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/2YxAB72tuM3n8axPDRntfS/tracks?uris=spotify%3Atrack%3A6fpU5GrcCDromZqdJhRHzM,spotify%3Atrack%3A05iXKTIt8dIDaCZGAWZRiV", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+    spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/" + playlist_id + "/tracks?uris={}".format(track_string), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
 
-    # try_hundred = spotify.get("https://api.spotify.com/v1/users/localconcertradio/playlists/7mvpNCfTBMSiTCA2EvHw01/tracks", headers={"Accept": 'application/json', "Authorization": "Bearer"})
-
-
-
-
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
 
@@ -451,19 +437,19 @@ def results():
 @app.route('/get_tracks', methods=["GET", "POST"])
 def get_tracks():
 
-    user_id = session['user_name']
+#     user_id = session['user_name']
 
-    playlist_id = request.json['playlist']
-
-
-    name = wild_card(request.json['artist']).data
+#     playlist_id = request.json['playlist']
 
 
+#     name = wild_card(request.json['artist']).data
 
-    if 'tracks' in name and (len(name['tracks'])) > 0:
-        if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
-            time.sleep(0.5)
-            add_song(playlist_id, name['tracks']['items'][0]['id'])
+
+
+#     if 'tracks' in name and (len(name['tracks'])) > 0:
+#         if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
+#             time.sleep(0.5)
+#             add_song(playlist_id, name['tracks']['items'][0]['id'])
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
 
