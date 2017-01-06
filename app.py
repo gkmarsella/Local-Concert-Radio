@@ -419,9 +419,10 @@ def results():
     # trying to use wildcard to add 100 tracks at once
     uri_list = [];
     for i in just_names:
-        tracks = wild_card(i).data['tracks']['items']
-        if tracks:
-            uri_list.append(tracks[0]['uri'])
+        tracks = wild_card(i).data
+        print(tracks)
+        if tracks['tracks']['items']:
+            uri_list.append(tracks['tracks']['items'][0]['uri'])
 
     track_uris = ','.join(uri_list)
     track_string = track_uris.replace(':', '%3A')
