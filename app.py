@@ -423,6 +423,7 @@ def results():
         print(tracks)
         if tracks['tracks']['items']:
             uri_list.append(tracks['tracks']['items'][0]['uri'])
+            time.sleep(0.5)
 
     track_uris = ','.join(uri_list)
     track_string = track_uris.replace(':', '%3A')
