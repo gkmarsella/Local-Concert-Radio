@@ -419,13 +419,15 @@ def results():
     # trying to use wildcard to add 100 tracks at once
     uri_list = [];
     for i in just_names:
-        uri_list.append(wild_card(i).data['tracks']['items'][0]['uri'])
+        tracks = wild_card(i).data['tracks']['items']
+        if tracks:
+            uri_list.append(tracks[0]['uri'])
 
     track_uris = ','.join(uri_list)
     track_string = track_uris.replace(':', '%3A')
 
 # spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/2YxAB72tuM3n8axPDRntfS/tracks?uris=spotify%3Atrack%3A6fpU5GrcCDromZqdJhRHzM,spotify%3Atrack%3A05iXKTIt8dIDaCZGAWZRiV", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
-    spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/" + playlist_id + "/tracks?uris={}".format(track_string), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+    spotify.post("https://api.spotify.com/v1/users/" + user_id + "/playlists/" + playlist_id + "/tracks", headers={"Accept": 'application/json', "Authorization": "Bearer"}, data={'uris': uri_list[:100]}, format='json')
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
@@ -451,7 +453,7 @@ def get_tracks():
     #         time.sleep(0.5)
     #         add_song(playlist_id, name['tracks']['items'][0]['id'])
 
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
+    # spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
 
 
     return jsonify({'url':spotify_player_source})
