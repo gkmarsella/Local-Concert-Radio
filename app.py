@@ -336,26 +336,26 @@ def search():
     return render_template("search.html")
     
 
-@app.route('/sort', methods=["GET"])
-def sort():
-    search_bands = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
-    search_bands = search_bands.json()
+# @app.route('/sort', methods=["GET"])
+# def sort():
+#     search_bands = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
+#     search_bands = search_bands.json()
 
-    def images(name):
-        try:
-            get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
-            get_image = get_image.json()['image_url']
-        except (json.decoder.JSONDecodeError, KeyError) as e:
-            return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
-        return get_image
+#     def images(name):
+#         try:
+#             get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
+#             get_image = get_image.json()['image_url']
+#         except (json.decoder.JSONDecodeError, KeyError) as e:
+#             return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
+#         return get_image
 
-    first_artist = {}
-    for s in search_bands:
-        first_artist.update({s['id']:images(s['artists'][0]['name'])})
+#     first_artist = {}
+#     for s in search_bands:
+#         first_artist.update({s['id']:images(s['artists'][0]['name'])})
 
-    db_to_favorites()  
+#     db_to_favorites()  
 
-    return render_template("sort.html", search_bands=search_bands, first_artist=first_artist, search_data=json.dumps(search_bands))
+#     return render_template("sort.html", search_bands=search_bands, first_artist=first_artist, search_data=json.dumps(search_bands))
 
 
 @app.route('/results', methods=["GET", "POST"])
@@ -365,7 +365,9 @@ def results():
     # Getting user ID to create a playlist
     user_id = session['user_name']
     create_playlist()
-    search_bid = json.loads(request.form.get('ids'))
+    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
+    search_bid = search_bid.json()
+    # search_bid = json.loads(request.form.get('ids'))
 
 
     #Getting new playlist id
@@ -420,7 +422,6 @@ def results():
     uri_list = [];
     for i in just_names:
         tracks = wild_card(i).data
-        print(tracks)
         if tracks['tracks']['items']:
             uri_list.append(tracks['tracks']['items'][0]['uri'])
             time.sleep(0.075)
@@ -438,8 +439,8 @@ def results():
 
 
 
-@app.route('/get_tracks', methods=["GET", "POST"])
-def get_tracks():
+# @app.route('/get_tracks', methods=["GET", "POST"])
+# def get_tracks():
 
 #     user_id = session['user_name']
 
@@ -458,7 +459,7 @@ def get_tracks():
     # spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
 
 
-    return jsonify({'url':spotify_player_source})
+    # return jsonify({'url':spotify_player_source})
 
 if __name__ == '__main__':
     app.run(debug=debug,port=3000)
