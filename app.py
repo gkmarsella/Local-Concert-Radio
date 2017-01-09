@@ -143,6 +143,17 @@ class Event(db.Model):
         self.name = name
 
 
+class City(db.Model):
+
+    __tablename__ = "cities"
+
+    id = db.Column(db.Integer, primary_key=True)
+    city = db.Column(db.Text)
+    state_code = db.Column(db.Text)
+
+    def __init__(self, city, state_code):
+        self.city = city
+        self.state_code = state_code
 
 
 # ************************************************************************************************************************
@@ -333,7 +344,9 @@ def db_to_favorites():
 @app.route('/search', methods=["GET"])
 def search():
     db_to_favorites()
-    return render_template("search.html")
+    
+    # hmm = db.session.query('cities', 'Providence')
+    return render_template("search.html", cities=City.query.get(1))
     
 
 # @app.route('/sort', methods=["GET"])
@@ -361,7 +374,6 @@ def search():
 @app.route('/results', methods=["GET", "POST"])
 def results():
     db_to_favorites()
-
     # Getting user ID to create a playlist
     user_id = session['user_name']
     create_playlist()
