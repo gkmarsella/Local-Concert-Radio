@@ -26,6 +26,7 @@
                 <th> Venue </th>
                 <th> City </th>
                 <th> Date </th>
+                <th> Tickets </th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +36,7 @@
                 <td> {{s['venue']['name']}} </td>
                 <td> {{s['venue']['city']}} </td>
                 <td> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
+                <td> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
             </tr>
             {% endfor %}
         </tbody>
