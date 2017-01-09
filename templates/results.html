@@ -3,7 +3,7 @@
 
 <script>document.write('<style>.create-playlist { display: none; }</style>');</script>
 
-    <header align="center" style="margin-bottom: 42px;">Local Concert Radio</header>
+    <!-- <header align="center" style="margin-bottom: 42px;">Local Concert Radio</header> -->
     <!-- with js -->
     <div id="spotify_player"></div>
     <li class="hidden pid" data-playlist="{{playlist_id}}" data-user="{{user_id}}"></li>
@@ -15,26 +15,50 @@
 
     {% endfor %}
     </ul>
-    <iframe id="spotify_player" src="https://embed.spotify.com/?uri=spotify:user:{{user_id}}:playlist:{{playlist_id}}" width="300px" height="100%" frameborder="0" allowtransparency="true"></iframe>
+    <iframe id="spotify_player" src="https://embed.spotify.com/?uri=spotify:user:{{user_id}}:playlist:{{playlist_id}}" width="25%" height="100%" frameborder="0" allowtransparency="true"></iframe>
+
+
+    <div id="results-table-div">
+    <table id="results-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th> Artist Name </th>
+                <th> Venue </th>
+                <th> City </th>
+                <th> Date </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in search_bid %}
+            <tr>
+                <td> {{s['artists'][0]['name']}} </td>
+                <td> {{s['venue']['name']}} </td>
+                <td> {{s['venue']['city']}} </td>
+                <td> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
 
 
 
-<div class="cards" align="center">
+
+
+<!-- <div class="cards" align="center">
     {% for s in search_bid%}
-
-        <!-- <div class="card-holder"> -->
             <div class="card">
                 <img class="red-x" src="{{url_for('static', filename='images/red-x.png')}}" height="280px" width="280px">
                 <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
                 <div class="sort-name" data-url="{{s['ticket_url']}}">
-                {{s['artists'][0]['name']}} 
+                {{s['artists'][0]['name']}}  -->
 <!--                     {% for i in range(1, (s['artists'])| length) %}
                         {% if i %}
                             Featuring:
                             <div>{{s['artists'][i]['name']}}</div>
                         {% endif %}
                     {% endfor %}  -->
-                </div>
+<!--                 </div>
                 <div class="sort-city">
                     CITY: {{s['venue']['city']}} 
                 </div>
@@ -51,9 +75,7 @@
                     <input class="delete-button" type="image" src="{{url_for('static', filename='images/hollow-x.png')}}">
                 </div>
             </div>
-        <!-- </div> -->
     {% endfor %} 
     </div>   
-    </div>
-      <!-- <script src="{{url_for('static', filename='tracks.js') }}"></script> -->
+    </div> -->
 {% endblock %}
