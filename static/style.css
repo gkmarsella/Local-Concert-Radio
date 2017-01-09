@@ -138,11 +138,12 @@ header {
 iframe {
 	margin-top: 50px;
 	height: 100%;
-	width: 300px;
+	width: 24%;
 	top: 0;
 	left: 0;
 	bottom: 0;
 	position: fixed;
+	padding-right: 1%;
 }
 
 /*CARDS*/
@@ -244,5 +245,6 @@ hr {
  	float: right;
  	height: 100%;
  	display: block;
- 	margin-right: 10px;
+ 	margin-right: 20px;
+ 	padding-left: 1%;
  }
