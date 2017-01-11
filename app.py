@@ -9,6 +9,7 @@ import string
 from requests.utils import quote
 import json
 import time
+import psycopg2
 
 # zindex for red x
 
@@ -155,6 +156,8 @@ class City(db.Model):
         self.city = city
         self.state_code = state_code
 
+    def __repr__(self):
+        return "{}".format(self.city)
 
 # ************************************************************************************************************************
 #                                              SPOTIFY AUTHENTICATION        
@@ -340,13 +343,10 @@ def db_to_favorites():
     g.events = get_user.events
 
 
-
 @app.route('/search', methods=["GET"])
 def search():
     db_to_favorites()
-    
-    # hmm = db.session.query('cities', 'Providence')
-    return render_template("search.html", cities=City.query.get(1))
+    return render_template("search.html", cities=City.query.all())
     
 
 # @app.route('/sort', methods=["GET"])
@@ -376,8 +376,16 @@ def results():
     db_to_favorites()
     # Getting user ID to create a playlist
     user_id = session['user_name']
+    datereplace = request.args.get('daterange').replace(' - ', ',')
+    date = datereplace.replace('/', '')
+    date_start = date[4:8] + '-' + date[:2] + '-' + date[2:4]
+    date_end = date[13:17] + '-' + date[9:11] + '-' + date[11:13]
+    dates = date_start + ',' + date_end
+
     create_playlist()
-    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
+    # search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + request.args.get('search-date-start') + "," + request.args.get('search-date-end') + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
+    # with date picker -
+    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + dates + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
     search_bid = search_bid.json()
     # search_bid = json.loads(request.form.get('ids'))
 

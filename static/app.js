@@ -68,8 +68,11 @@ $(function(){
 	});
 
 
-    $('#results-table').DataTable();
+	$(document).ready(function(){
+    	$('#results-table').DataTable();		
+    });
 
+	    $('input[name="daterange"]').daterangepicker();
 
 
 });
