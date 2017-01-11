@@ -58,27 +58,30 @@
         </li> -->
 
 
-        <li class="dropdown dropdown-lg">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Favorited Events <span class="caret"></span></a>
+<!--         <li class="dropdown dropdown-lg">
+          <a href="#" class="dropdown-toggle fav" data-toggle="dropdown" role="button" aria-expanded="false">Favorited Events <span class="caret"></span></a>
           <ul class="dropdown-menu scrollable-menu fav-event" role="menu" onClick="event.stopPropagation();">
           {% for e in g.events %}
             <li class="fav-li" data-id="{{e.id}}"><img class="delete-fav" src="{{url_for('static', filename='images/x-icon.png')}}"><a class="dropdown-item" href="{{e.event}}" target="_blank" id="fav-a">{{e.name}}</a></li><li class="divider"></li>
           {% endfor %}
           </ul>
-        </li>
+        </li> -->
 
+<!--         <li class="dropdown dropdown-lg logo-test">
+          <img style="height: 45px;" src="{{url_for('static', filename='images/pin-draft.png')}}">Local Concert Radio
+        </li> -->
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a id="back-to-search" href="{{url_for('search')}}">Back to search</a></li>
       </ul>
       <ul class="nav navbar-nav" style="position: absolute; left: 35%;">
-      <li>
+<!--       <li>
         <form class="nav navbar-form" name="search-sort" action="{{url_for('results')}}" method="POST">
         <input type="hidden" name="ids" value="{{search_data}}">
         <button type="submit" class="create-playlist btn btn-default btn-success">Create Playlist</button>
         </form>
-      </li>
+      </li> -->
        </ul>
       
     </div>

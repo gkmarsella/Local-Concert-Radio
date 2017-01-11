@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <body background="{{url_for('static', filename='images/live-green.jpg')}}" style="background-repeat: no-repeat; background-size: 100%">
-<script>document.write('<style>.create-playlist { display: none; }</style>');</script>
+<!-- <script>document.write('<style>.create-playlist { display: none; }</style>');</script>
 <script>document.write('<style>#back-to-search { display: none; }</style>');</script>
+<script>document.write('<style>.fav { display: none; }</style>');</script> -->
+<!-- <script>document.write('<style>.navbar { display: none; }</style>');</script> -->
 
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
@@ -13,19 +15,15 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-
+	<!-- <img src="{{url_for('static', filename='images/blank_marquee.jpg')}}"> -->
 	<header align="center">Local Concert Radio</header>
 	<h3 align="center">stream music from bands playing in your area</h3>
 
-				<div class="form-group">
-				<select name="search-city" class="searchbar form-control">
-					{% for c in cities %}
-						<option value="{{c}}">{{c}}</option>
-					{% endfor %}
-				</select>
-			</div>
-
-
+<ul class="hidden citylist">
+{% for c in cities %}
+<li data-city="{{ c }}" data-state="{{ c.state_code }}" ></li>
+{% endfor %}
+</ul>
 
 
 	
@@ -33,8 +31,9 @@
 
 	<div align="center" id="search-form">
 		<form action="{{url_for('results')}}" method="GET" class="search-form">
-  			<div class="form-group">
+  			<div class="form-group state">
 			<select name="search-state" id="state" class="searchbar form-control">
+				<option value="">State</option>
 				<option value="AL">Alabama</option>
 				<option value="AK">Alaska</option>
 				<option value="AZ">Arizona</option>
@@ -90,8 +89,17 @@
 			</div>
 
 
-		<div class="form-group">
+<!-- 		<div class="form-group">
 		<input id="city" class="searchbar form-control" type="text" name="search-city" placeholder="enter a city">
+		</div> -->
+
+		<div class="form-group">
+			<select id="city" name="search-city" class="searchbar form-control">
+				<option>City</option>
+				{% for c in cities %}
+					<option class="{{c.state_code}} hidden" value="{{c}}">{{c}}</option>
+				{% endfor %}
+			</select>
 		</div>
 
 		<div class="form-group">

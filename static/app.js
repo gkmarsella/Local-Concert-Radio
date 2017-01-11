@@ -20,8 +20,16 @@ $(function(){
 		$(this).parent().parent().children(".red-x").toggle();
 	});
 
+	$("#city").click(function(e){
+		var selected = $(this).parent().parent().children('.state').children().val();
+		$(this).addClass(selected)
+		if($(this).children('.' + selected)){
+			$(this).children('.' + selected).removeClass('hidden');
+		}
+	});
 
-	// add event utl and artist name to database
+
+	// add event url and artist name to database
 	$(".event-button").click(function(e){
 		var $clicked = $(this).parent().parent().children(".sort-name");
 		var name = $clicked.text().trim();

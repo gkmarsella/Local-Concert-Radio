@@ -230,7 +230,7 @@ def spotify_authorized():
 
     # Save some info to the DB
     db_to_favorites()
-    return render_template("search.html")
+    return render_template("search.html",cities=City.query.all())
 
 
 
