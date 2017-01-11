@@ -72,7 +72,7 @@ $(function(){
     	$('#results-table').DataTable();		
     });
 
-	    $('input[name="daterange"]').daterangepicker();
+	    // $('input[name="daterange"]').daterangepicker();
 
 
 });
