@@ -20,12 +20,26 @@ $(function(){
 		$(this).parent().parent().children(".red-x").toggle();
 	});
 
-	$("#city").click(function(e){
-		var selected = $(this).parent().parent().children('.state').children().val();
-		$(this).addClass(selected)
-		if($(this).children('.' + selected)){
-			$(this).children('.' + selected).removeClass('hidden');
+	// $("#city").click(function(e){
+	// 	var selected = $(this).parent().parent().children('.state').children().val();
+	// 	$(this).addClass(selected);
+	// 	if($(this).children('.' + selected)){
+	// 		$(this).children('.' + selected).removeClass('hidden');
+	// 	}
+	// });
+
+	$("#state").change(function(e){
+		var stateCode = $(this).val();
+		$(this).parent().parent().children('.city-div').children().addClass(stateCode);
+		var selected = $(this).parent().parent().children('.city-div').children();
+
+		if(selected.children('.' + stateCode) !== stateCode){
+			selected.children().addClass('hidden');
 		}
+
+		if(selected.children('.' + stateCode)){
+			selected.children('.' + stateCode).removeClass('hidden')
+		} 
 	});
 
 
