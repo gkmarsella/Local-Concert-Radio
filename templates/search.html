@@ -19,11 +19,6 @@
 	<header align="center">Local Concert Radio</header>
 	<h3 align="center">stream music from bands playing in your area</h3>
 
-<ul class="hidden citylist">
-{% for c in cities %}
-<li data-city="{{ c }}" data-state="{{ c.state_code }}" ></li>
-{% endfor %}
-</ul>
 
 
 	
@@ -96,8 +91,8 @@
 		<div class="form-group">
 			<select id="city" name="search-city" class="searchbar form-control">
 				<option>City</option>
-				{% for c in cities %}
-					<option class="{{c.state_code}} hidden" value="{{c}}">{{c}}</option>
+				{% for c in all_cities %}
+					<option class="{{c[-2:]}} hidden" value="{{c[:-2]}}">{{c[:-2]}}</option>
 				{% endfor %}
 			</select>
 		</div>
