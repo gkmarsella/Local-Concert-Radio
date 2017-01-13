@@ -10,6 +10,7 @@ from requests.utils import quote
 import json
 import time
 import psycopg2
+import datetime
 
 all_cities = ['Aaronsburg' 'PA',
 'Abbeville' 'AL',
@@ -30151,17 +30152,25 @@ def results():
                 artist_dict.update({y['name']:y['id']})
 
 
+# before test
+    # just_names = []
+    # for i in artist_names:
+    #     if 'artists' in i and 'items' in i['artists']:
+    #         for y in i['artists']['items'][0]:
+    #             just_names.append(y['name'])  
+
     just_names = []
     for i in artist_names:
-        if 'artists' in i and 'items' in i['artists']:
-            for y in i['artists']['items']:
-                just_names.append(y['name'])     
+        if 'artists' in i and 'items' in i['artists'] and len(i['artists']['items']) > 0:
+            just_names.append(i['artists']['items'][0]['name'])  
 
+    from IPython import embed; embed();
 
     # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
     names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
 
-
+##################################################################################
+################################## FOR ARTIST IMAGES #############################
     def images(name):
         try:
             get_image = requests.get("http://api.bandsintown.com/artists/" +  quote(name, safe='') + ".json?api_version=2.0&app_id=YOUR_APP_ID")
@@ -30170,12 +30179,13 @@ def results():
             return "https://s3.amazonaws.com/bit-photos/artistLarge.jpg"
         return get_image
 
-
     first_artist = {}
     for s in search_bid:
         if 'artists' in s:
             for x in s['artists']:
                 first_artist.update({s['id']:images(s['artists'][0]['name'])})
+##################################################################################
+##################################################################################
 
 
     # trying to use wildcard to add 100 tracks at once
@@ -30184,18 +30194,16 @@ def results():
         tracks = wild_card(i).data
         if tracks['tracks']['items']:
             uri_list.append(tracks['tracks']['items'][0]['uri'])
-            time.sleep(0.075)
 
-    track_uris = ','.join(uri_list)
-    track_string = track_uris.replace(':', '%3A')
+    # track_uris = ','.join(uri_list)
+    # track_string = track_uris.replace(':', '%3A')
 
 # spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/2YxAB72tuM3n8axPDRntfS/tracks?uris=spotify%3Atrack%3A6fpU5GrcCDromZqdJhRHzM,spotify%3Atrack%3A05iXKTIt8dIDaCZGAWZRiV", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
     spotify.post("https://api.spotify.com/v1/users/" + user_id + "/playlists/" + playlist_id + "/tracks", headers={"Accept": 'application/json', "Authorization": "Bearer"}, data={'uris': uri_list[:100]}, format='json')
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
-
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, first_artist=first_artist, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist)
 
 
 
@@ -30228,3 +30236,28 @@ def results():
 
 if __name__ == '__main__':
     app.run(debug=debug,port=3000)
+
+
+    # data_name = uri_list[0]['items'][0]['name']
+ @@@   # data_artists = uri_list[0]['items'][0]['artists'][0]['name'] (NEED TO LOOP THROUGH FOR MULTIPLE ARTISTS)
+    # data_duration_ms = uri_list[0]['items'][0]['duration_ms']
+    # data_uri = uri_list[0]['items'][0]['uri']
+    # data_preview = uri_list[0]['items'][0]['preview_url']
+    # data_web_player_url = uri_list[0]['items'][0]['external_urls']['spotify'].replace('open', 'play')
+    # data_size_640 = uri_list[0]['items'][0]['album']['images'][0]['url']
+    # data_size_300 = uri_list[0]['items'][0]['album']['images'][1]['url']
+    # data_size_64 = uri_list[0]['items'][0]['album']['images'][2]['url']
+
+    # <div class="track-row-number"> uri_list[0]['items'][0]['track_number'] </div>
+    # <div class="track-row-info"> uri_list[0]['items'][0]['name'] </div> (MAY NEED TO ADD SPACES)
+ @@@   # <div class="track-artist"> uri_list[0]['items'][0]['artists'][0]['name'] </div> (MAY NEED TO LOOP FOR MULTIPLE ARTISTS)
+
+
+    # time = str(datetime.timedelta(seconds=uri_list[0]['items'][0]['duration_ms'] / 1000))[2:7]
+    # if time[0] == '0':
+    #    time = time[:1]
+    # <div class="track-row-duration"> time </div>
+
+    frame_list = []
+    for i in uri_list:
+        frame_list.append({'data_name':i['items'][0]['name'], 'data_artists': i['items'][0]['artists'][0]['name'], 'data_duration':i['items'][0]['duration_ms'], 'data_uri':i['items'][0]['uri'], 'data_preview':i['items'][0]['preview_url'], 'data_web_player_url':i['items'][0]['external_urls']['spotify'].replace('open', 'play'), 'data_size_640':i['items'][0]['album']['images'][0]['url'], 'data_size_300':i['items'][0]['album']['images'][1]['url'], 'data_size_64':i['items'][0]['album']['images'][2]['url'], 'track_row_number':i['items'][0]['track_number'], 'track_row_info':i['items'][0]['name'], 'track_row_duration': str(datetime.timedelta(seconds=uri_list[0]['items'][0]['duration_ms'] / 1000))[2:7], 'track_artist': i['items'][0]['artists'][0]['name']})
