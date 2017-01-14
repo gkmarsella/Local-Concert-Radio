@@ -30128,7 +30128,6 @@ def results():
     # with date picker -
     search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + dates + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
     search_bid = search_bid.json()
-    # search_bid = json.loads(request.form.get('ids'))
 
 
     #Getting new playlist id
@@ -30150,21 +30149,13 @@ def results():
         if 'artists' in i and 'items' in i['artists']:
             for y in i['artists']['items']:
                 artist_dict.update({y['name']:y['id']})
-
-
-# before test
-    # just_names = []
-    # for i in artist_names:
-    #     if 'artists' in i and 'items' in i['artists']:
-    #         for y in i['artists']['items'][0]:
-    #             just_names.append(y['name'])  
+ 
 
     just_names = []
     for i in artist_names:
         if 'artists' in i and 'items' in i['artists'] and len(i['artists']['items']) > 0:
             just_names.append(i['artists']['items'][0]['name'])  
 
-    from IPython import embed; embed();
 
     # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
     names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
@@ -30189,21 +30180,18 @@ def results():
 
 
     # trying to use wildcard to add 100 tracks at once
-    uri_list = [];
-    for i in just_names:
-        tracks = wild_card(i).data
-        if tracks['tracks']['items']:
-            uri_list.append(tracks['tracks']['items'][0]['uri'])
+    # uri_list = [];
+    # for i in just_names:
+    #     tracks = wild_card(i).data
+    #     if tracks['tracks']['items']:
+    #         uri_list.append(tracks['tracks']['items'][0]['uri'])
 
-    # track_uris = ','.join(uri_list)
-    # track_string = track_uris.replace(':', '%3A')
 
-# spotify.post("https://api.spotify.com/v1/users/localconcertradio/playlists/2YxAB72tuM3n8axPDRntfS/tracks?uris=spotify%3Atrack%3A6fpU5GrcCDromZqdJhRHzM,spotify%3Atrack%3A05iXKTIt8dIDaCZGAWZRiV", headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
-    spotify.post("https://api.spotify.com/v1/users/" + user_id + "/playlists/" + playlist_id + "/tracks", headers={"Accept": 'application/json', "Authorization": "Bearer"}, data={'uris': uri_list[:100]}, format='json')
+    # spotify.post("https://api.spotify.com/v1/users/" + user_id + "/playlists/" + playlist_id + "/tracks", headers={"Accept": 'application/json', "Authorization": "Bearer"}, data={'uris': uri_list[:100]}, format='json')
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
 
 
@@ -30229,9 +30217,42 @@ def results():
 
     # return jsonify({'url':spotify_player_source})
 
+@app.route('/find_tracks', methods=["GET", "POST"])
+def find_tracks():
+
+    tracks = wild_card(request.json['name']).data
+    if tracks['tracks']['items']:
+        first_track = tracks['tracks']['items'][0]
+        frame_list = {
+            'data_name': first_track['name'], 
+            'data_artists': first_track['artists'][0]['name'], 
+            'data_duration': first_track['duration_ms'], 
+            'data_uri': first_track['uri'], 
+            'data_preview': first_track['preview_url'], 
+            'data_web_player_url': first_track['external_urls']['spotify'].replace('open', 'play'), 
+            'data_size_640': first_track['album']['images'][0]['url'], 
+            'data_size_300': first_track['album']['images'][1]['url'], 
+            'data_size_64': first_track['album']['images'][2]['url'], 
+            'track_row_number': first_track['track_number'], 
+            'track_row_info': first_track['name'], 
+            'track_row_duration': str(datetime.timedelta(seconds=first_track['duration_ms'] / 1000))[2:7], 
+            'track_artist': first_track['artists'][0]['name']
+        }
+
+        return jsonify(frame_list)
+
+@app.route('/add_tracks', methods=["GET", "POST"])
+def add_tracks():
+
+    user_id = session['user_name']
+    playlist_id = request.json['playlist']
+
+    frame_list = []
+    for i in uri_list:
+        frame_list.append({'data_name':i['items'][0]['name'], 'data_artists': i['items'][0]['artists'][0]['name'], 'data_duration':i['items'][0]['duration_ms'], 'data_uri':i['items'][0]['uri'], 'data_preview':i['items'][0]['preview_url'], 'data_web_player_url':i['items'][0]['external_urls']['spotify'].replace('open', 'play'), 'data_size_640':i['items'][0]['album']['images'][0]['url'], 'data_size_300':i['items'][0]['album']['images'][1]['url'], 'data_size_64':i['items'][0]['album']['images'][2]['url'], 'track_row_number':i['items'][0]['track_number'], 'track_row_info':i['items'][0]['name'], 'track_row_duration': str(datetime.timedelta(seconds=uri_list[0]['items'][0]['duration_ms'] / 1000))[2:7], 'track_artist': i['items'][0]['artists'][0]['name']})
 
 
-
+    return jsonify({'url':spotify_player_source})
 
 
 if __name__ == '__main__':
@@ -30239,7 +30260,7 @@ if __name__ == '__main__':
 
 
     # data_name = uri_list[0]['items'][0]['name']
- @@@   # data_artists = uri_list[0]['items'][0]['artists'][0]['name'] (NEED TO LOOP THROUGH FOR MULTIPLE ARTISTS)
+    # data_artists = uri_list[0]['items'][0]['artists'][0]['name'] (NEED TO LOOP THROUGH FOR MULTIPLE ARTISTS)
     # data_duration_ms = uri_list[0]['items'][0]['duration_ms']
     # data_uri = uri_list[0]['items'][0]['uri']
     # data_preview = uri_list[0]['items'][0]['preview_url']
@@ -30250,7 +30271,7 @@ if __name__ == '__main__':
 
     # <div class="track-row-number"> uri_list[0]['items'][0]['track_number'] </div>
     # <div class="track-row-info"> uri_list[0]['items'][0]['name'] </div> (MAY NEED TO ADD SPACES)
- @@@   # <div class="track-artist"> uri_list[0]['items'][0]['artists'][0]['name'] </div> (MAY NEED TO LOOP FOR MULTIPLE ARTISTS)
+    # <div class="track-artist"> uri_list[0]['items'][0]['artists'][0]['name'] </div> (MAY NEED TO LOOP FOR MULTIPLE ARTISTS)
 
 
     # time = str(datetime.timedelta(seconds=uri_list[0]['items'][0]['duration_ms'] / 1000))[2:7]
@@ -30258,6 +30279,3 @@ if __name__ == '__main__':
     #    time = time[:1]
     # <div class="track-row-duration"> time </div>
 
-    frame_list = []
-    for i in uri_list:
-        frame_list.append({'data_name':i['items'][0]['name'], 'data_artists': i['items'][0]['artists'][0]['name'], 'data_duration':i['items'][0]['duration_ms'], 'data_uri':i['items'][0]['uri'], 'data_preview':i['items'][0]['preview_url'], 'data_web_player_url':i['items'][0]['external_urls']['spotify'].replace('open', 'play'), 'data_size_640':i['items'][0]['album']['images'][0]['url'], 'data_size_300':i['items'][0]['album']['images'][1]['url'], 'data_size_64':i['items'][0]['album']['images'][2]['url'], 'track_row_number':i['items'][0]['track_number'], 'track_row_info':i['items'][0]['name'], 'track_row_duration': str(datetime.timedelta(seconds=uri_list[0]['items'][0]['duration_ms'] / 1000))[2:7], 'track_artist': i['items'][0]['artists'][0]['name']})

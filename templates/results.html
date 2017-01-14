@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+<script src="{{url_for('static', filename='tracks.js') }}"></script>
 
 
     <!-- <header align="center" style="margin-bottom: 42px;">Local Concert Radio</header> -->
@@ -20,6 +21,13 @@
 
     {% endfor %}
     </ul>
+    <ul class="hidden name-ul">
+        {% for name in just_names %}
+            <li data-name="{{name}}"></li>
+        {% endfor %}
+    </ul>
+
+
     <iframe id="spotify_player" src="https://embed.spotify.com/?uri=spotify:user:{{user_id}}:playlist:{{playlist_id}}" width="24%" height="100%" frameborder="0" allowtransparency="true"></iframe>
 
 
