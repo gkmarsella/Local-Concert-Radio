@@ -4,6 +4,11 @@ body {
 	color: white;
 }
 
+.table-condensed {
+	background-color: white;
+	color: black;
+}
+
 
 
 /*search form box*/
@@ -20,7 +25,7 @@ body {
 	margin-top: 74px;
     background-color: rgba(15, 17, 1, 0.32);
     background-size: 10px;
-    width: 244px;
+    width: 275px;
     margin-left: auto;
     padding: 20px;
     margin-right: auto;
@@ -31,14 +36,14 @@ body {
 #city {
 	display: block;
 	margin: 8px;
-	width: 170px;
+	width: 199px;
 	margin: 20px
 }
 
 #state {
 	display: block;
 	margin: 8px;
-	width: 170px;
+	width: 199px;
 	margin: 20px;
 }
 
@@ -47,28 +52,28 @@ body {
 #radius {
 	display: block;
 	margin: 8px;
-	width: 170px;
+	width: 199px;
 	margin: 20px;
 }
 
 #datepick {
 	display: block;
 	margin: 8px;
-	width: 170px;
+	width: 199px;
 	margin: 20px;
 }
 
 #date-end {
 	display: block;
 	margin: 8px;
-	width: 170px;
+	width: 199px;
 	margin: 20px;
 }
 
 #submitbutton {
 	display: block;
 	margin: 8px;
-	width: 170px;
+	width: 199px;
 	margin: 20px;
 	background-color: #3eb43c;
 	color: whitesmoke;

@@ -1,5 +1,5 @@
 $(function(){
-
+	document.domain = 'spotify.com'
 	$('.name-ul').children().each(function(i, el){
 		var dataObj = $(el).data();
 		dataObj.playlist = $(".pid").data("playlist");
@@ -15,5 +15,5 @@ $(function(){
 			}
 		})
 	})
-
+// $("iframe#spotify_player").attr('src', function(i, val) { return val; })
 });
