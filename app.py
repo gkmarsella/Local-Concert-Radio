@@ -30195,12 +30195,16 @@ def results():
 
 
 
+counter = 0
 @app.route('/get_tracks', methods=["GET", "POST"])
 def get_tracks():
+
+
 
     user_id = session['user_name']
     playlist_id = user_playlists().data['items'][0]['id']
 
+    print(request.json)
     name = wild_card(request.json['artist']).data
 
 
