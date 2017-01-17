@@ -13,7 +13,7 @@ $(function(){
 			dataType: 'json',
 			success: function() {
 				++counter
-				$("#loading_player").text('"' + counter + '" of "' + totalTracks.length + '" added')
+				$("#loading_player").text((counter / totalTracks.length * 100).toFixed(0) + '% done')
 			}
 		})
 	})).then(function(data){
