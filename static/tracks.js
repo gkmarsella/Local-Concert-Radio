@@ -9,7 +9,10 @@ $(function(){
 			url: "/get_tracks",
 			data: JSON.stringify(($(el).data())),
 			contentType: 'application/json',
-			dataType: 'json'
+			dataType: 'json',
+			success: function() {
+				console.log("one more is done!");
+			}
 		})
 	})).then(function(data){
 		console.log("all Done")
