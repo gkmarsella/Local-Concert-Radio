@@ -259,3 +259,8 @@ hr {
     font-size: 28px;
     color: #5bee5c;
  }
+
+ .br-images {
+ 	z-index: inherit;
+ 	position: absolute;
+ }

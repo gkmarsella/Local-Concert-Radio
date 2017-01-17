@@ -30195,64 +30195,25 @@ def results():
 
 
 
-# @app.route('/get_tracks', methods=["GET", "POST"])
-# def get_tracks():
-
-#     user_id = session['user_name']
-
-#     playlist_id = request.json['playlist']
-
-
-#     name = wild_card(request.json['artist']).data
-
-
-
-    # if 'tracks' in name and (len(name['tracks'])) > 0:
-    #
-    #         time.sleep(0.5)
-    #         add_song(playlist_id, name['tracks']['items'][0]['id'])
-
-    # spotify_player_source = "https://embed.spotify.com/?uri=spotify:user:" + user_id + ":playlist:{}".format(quote(playlist_id))
-
-
-    # return jsonify({'url':spotify_player_source})
-
-@app.route('/find_tracks', methods=["GET", "POST"])
-def find_tracks():
-
-    tracks = wild_card(request.json['name']).data
-    if tracks['tracks']['items']:
-        first_track = tracks['tracks']['items'][0]
-        frame_list = {
-            'data_name': first_track['name'], 
-            'data_artists': first_track['artists'][0]['name'], 
-            'data_duration': first_track['duration_ms'], 
-            'data_uri': first_track['uri'], 
-            'data_preview': first_track['preview_url'], 
-            'data_web_player_url': first_track['external_urls']['spotify'].replace('open', 'play'), 
-            'data_size_640': first_track['album']['images'][0]['url'], 
-            'data_size_300': first_track['album']['images'][1]['url'], 
-            'data_size_64': first_track['album']['images'][2]['url'], 
-            'track_row_number': first_track['track_number'], 
-            'track_row_info': first_track['name'], 
-            'track_row_duration': str(datetime.timedelta(seconds=first_track['duration_ms'] / 1000))[2:7], 
-            'track_artist': first_track['artists'][0]['name']
-        }
-
-        return jsonify(frame_list)
-
-@app.route('/add_tracks', methods=["GET", "POST"])
-def add_tracks():
+@app.route('/get_tracks', methods=["GET", "POST"])
+def get_tracks():
 
     user_id = session['user_name']
-    playlist_id = request.json['playlist']
+    playlist_id = user_playlists().data['items'][0]['id']
 
-    frame_list = []
-    for i in uri_list:
-        frame_list.append({'data_name':i['items'][0]['name'], 'data_artists': i['items'][0]['artists'][0]['name'], 'data_duration':i['items'][0]['duration_ms'], 'data_uri':i['items'][0]['uri'], 'data_preview':i['items'][0]['preview_url'], 'data_web_player_url':i['items'][0]['external_urls']['spotify'].replace('open', 'play'), 'data_size_640':i['items'][0]['album']['images'][0]['url'], 'data_size_300':i['items'][0]['album']['images'][1]['url'], 'data_size_64':i['items'][0]['album']['images'][2]['url'], 'track_row_number':i['items'][0]['track_number'], 'track_row_info':i['items'][0]['name'], 'track_row_duration': str(datetime.timedelta(seconds=uri_list[0]['items'][0]['duration_ms'] / 1000))[2:7], 'track_artist': i['items'][0]['artists'][0]['name']})
+    name = wild_card(request.json['artist']).data
+
+
+
+    if 'tracks' in name and (len(name['tracks'])) > 0:
+        if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
+            add_song(playlist_id, name['tracks']['items'][0]['id'])
+
+    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
 
     return jsonify({'url':spotify_player_source})
+
 
 
 if __name__ == '__main__':
