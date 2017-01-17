@@ -1,7 +1,8 @@
 $(function(){
 
 
-
+	var counter = 0;
+	var totalTracks = $('ul.hidden').children();
 	$.when.apply($, $('ul.hidden').children().map(function(i, el){
 		console.log($(el).data());
 		return $.ajax({
@@ -11,7 +12,8 @@ $(function(){
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function() {
-				console.log("one more is done!");
+				++counter
+				$("#loading_player").append('<li>"' + counter + '" of "' + totalTracks.length + '"</li>')
 			}
 		})
 	})).then(function(data){

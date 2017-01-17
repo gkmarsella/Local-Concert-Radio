@@ -264,3 +264,14 @@ hr {
  	z-index: inherit;
  	position: absolute;
  }
+
+ #loading_player {
+ 	margin-top: 50px;
+	height: 92%;
+	width: 24%;
+	top: 10px;
+	left: 15px;
+	bottom: 0;
+	position: fixed;
+	padding-right: 1%;
+ }
