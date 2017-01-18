@@ -143,12 +143,12 @@ header {
 iframe {
 	margin-top: 50px;
 	height: 92%;
-	width: 24%;
 	top: 10px;
 	left: 15px;
 	bottom: 0;
-	position: fixed;
 	padding-right: 1%;
+	position: fixed;
+    width: initial;
 }
 
 /*CARDS*/
@@ -246,7 +246,6 @@ hr {
  /*Table*/
 
  #results-table-div {
- 	width: 75%;
  	float: right;
  	height: 100%;
  	display: block;
@@ -268,10 +267,20 @@ hr {
  #loading_player {
  	margin-top: 50px;
 	height: 92%;
-	width: 24%;
 	top: 10px;
 	left: 15px;
 	bottom: 0;
-	position: fixed;
 	padding-right: 1%;
+ }
+
+ html {
+ 	height: 100%;
+ }
+
+ head {
+ 	height: 100%;
+ }
+
+ body {
+ 	height: 100%;
  }

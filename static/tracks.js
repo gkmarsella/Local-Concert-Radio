@@ -19,8 +19,17 @@ $(function(){
 	})).then(function(data){
 		console.log("all Done")
 		$("#loading_player").addClass("hidden")
+		$(".vertical-slider").addClass("hidden")
 		$("#spotify_player").append('<iframe src="' + data[0].url + '" width="100%" height="325" frameborder="0" allowtransparency="true"></iframe>')
 	})
+
+	$('.vertical-slider').unslider({
+		animation: 'vertical',
+		autoplay: true,
+		infinite: true,
+		nav: false,
+		arrows: false
+	});
 
 
 });

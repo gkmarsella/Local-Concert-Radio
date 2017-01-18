@@ -6,86 +6,71 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/unslider/2.0.3/css/unslider-dots.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/unslider/2.0.3/css/unslider.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/unslider/2.0.3/js/unslider-min.js"></script>
 
     <!-- <header align="center" style="margin-bottom: 42px;">Local Concert Radio</header> -->
     <!-- with js -->
-    <div id="spotify_player"></div>
-    <div id="loading_player"></div>
 
-    <li class="hidden pid" data-playlist="{{playlist_id}}" data-user="{{user_id}}"></li>
-    <ul class="hidden">
-    <!-- /with js -->
+<div class="container-fluid" style="height: 100%;">
+    <div class="row">
 
-    {% for k, v in names_no_feat.items() %}
-        <li data-artist="{{ k }}" data-id="{{ v }}" ></li>
-    {% endfor %}
-    </ul>
+    <div class="col-sm-3">
+       <div id="spotify_player"></div>
+       <div id="loading_player"></div>
 
-    <!-- <iframe id="spotify_player" src="https://embed.spotify.com/?uri=spotify:user:{{user_id}}:playlist:{{playlist_id}}" width="24%" height="100%" frameborder="0" allowtransparency="true"></iframe> -->
+           <div class="vertical-slider">
+               <ul class="scrolling_images">
+                   {% for s in search_bid %}
+                       {% if first_artist[s['id']] and first_artist[s['id']] != "https://s3.amazonaws.com/bit-photos/artistLarge.jpg" %}
+                           <li><img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px"></li>
+                       {% endif %}
+                   {% endfor %}
+               </ul>
+           </div>
+       
 
+       <li class="hidden pid" data-playlist="{{playlist_id}}" data-user="{{user_id}}"></li>
+       <ul class="hidden">
+       <!-- /with js -->
 
-    <div id="results-table-div">
-    <table id="results-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th> Artist Name </th>
-                <th> Venue </th>
-                <th> City </th>
-                <th> Date </th>
-                <th> Tickets </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for s in search_bid %}
-            <tr>
-                <td> {{s['artists'][0]['name']}} </td>
-                <td> {{s['venue']['name']}} </td>
-                <td> {{s['venue']['city']}} </td>
-                <td> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
-                <td> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+       {% for k, v in names_no_feat.items() %}
+           <li data-artist="{{ k }}" data-id="{{ v }}" ></li>
+       {% endfor %}
+       </ul> 
     </div>
 
+    <div class="col-sm-9">
+        <div id="results-table-div">
+        <table id="results-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th> Artist Name </th>
+                    <th> Venue </th>
+                    <th> City </th>
+                    <th> Date </th>
+                    <th> Tickets </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in search_bid %}
+                <tr>
+                    <td> {{s['artists'][0]['name']}} </td>
+                    <td> {{s['venue']['name']}} </td>
+                    <td> {{s['venue']['city']}} </td>
+                    <td> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
+                    <td> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+    
+</div>
+</div>
 
-
-
-
-<!-- <div class="cards" align="center">
-    {% for s in search_bid%}
-            <div class="card">
-                <img class="red-x" src="{{url_for('static', filename='images/red-x.png')}}" height="280px" width="280px">
-                <img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px">
-                <div class="sort-name" data-url="{{s['ticket_url']}}">
-                {{s['artists'][0]['name']}}  -->
-<!--                     {% for i in range(1, (s['artists'])| length) %}
-                        {% if i %}
-                            Featuring:
-                            <div>{{s['artists'][i]['name']}}</div>
-                        {% endif %}
-                    {% endfor %}  -->
-<!--                 </div>
-                <div class="sort-city">
-                    CITY: {{s['venue']['city']}} 
-                </div>
-                <div class="sort-venue">
-                    VENUE: {{s['venue']['name']}}
-                </div> 
-                <div class="sort-date">
-                    DATE: {{s['datetime']}}
-                </div> 
-                <hr>
-                <div class="card-button">
-                    <input class="event-button" type="image" src="{{url_for('static', filename='images/thickheart.png')}}" style="height: 30px;">
-                    <a href="{{s['ticket_url']}}" target="_blank"><img src="{{url_for('static', filename='images/bwticket.png')}}" style="height:54px; width:68px;"></a>                  
-                    <input class="delete-button" type="image" src="{{url_for('static', filename='images/hollow-x.png')}}">
-                </div>
-            </div>
-    {% endfor %} 
-    </div>   
-    </div> -->
     <script src="{{url_for('static', filename='tracks.js') }}"></script>
 
 {% endblock %}
