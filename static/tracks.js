@@ -1,7 +1,6 @@
 $(function(){
 
 
-	var counter = 0;
 	var totalTracks = $('ul.hidden').children();
 	$.when.apply($, $('ul.hidden').children().map(function(i, el){
 		console.log($(el).data());
