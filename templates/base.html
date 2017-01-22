@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Local Concert Radio</title>
   <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Rambla" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <link rel="icon" href="{{url_for('static', filename='images/Ticket-green.png')}}"> 
@@ -74,6 +75,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a id="back-to-search" href="{{url_for('search')}}">Back to search</a></li>
+        <li><a href="{{url_for('logout')}}">Logout</a></li>
       </ul>
       <ul class="nav navbar-nav" style="position: absolute; left: 35%;">
 <!--       <li>
