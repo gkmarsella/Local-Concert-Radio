@@ -473,7 +473,7 @@ def get_tracks():
 
 
     counter = 0
-    if counter == 20:
+    if counter == 14:
         time.sleep(4.00)
         counter = 0
     if 'tracks' in name and (len(name['tracks'])) > 0:
