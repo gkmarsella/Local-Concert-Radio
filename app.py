@@ -473,8 +473,8 @@ def get_tracks():
 
 
     counter = 0
-    if counter == 14:
-        time.sleep(4.00)
+    if counter == 10:
+        time.sleep(5.00)
         counter = 0
     if 'tracks' in name and (len(name['tracks'])) > 0:
         if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
