@@ -58,10 +58,10 @@
                 {% for s in search_bid %}
                 <tr>   
                     <td> <img src="{{first_artist[s['id']]}}" style='height: 60px; width: 60px; border-radius: 30px; margin-right: 20px;'>{{s['artists'][0]['name']}} </td>
-                    <td style="padding-top: 2.5%;"> {{s['venue']['city']}} </td>
-                    <td style="padding-top: 2.5%;"> {{s['venue']['name']}} </td>
-                    <td style="padding-top: 2.5%;"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
-                    <td style="padding-top: 2.5%;"> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
+                    <td style="padding-top: 3%;"> {{s['venue']['name']}} </td>
+                    <td style="padding-top: 3%;"> {{s['venue']['city']}} </td>
+                    <td style="padding-top: 3%;"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
+                    <td style="padding-top: 3%;"> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -11,8 +11,8 @@ $(function(){
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function() {
-				++counter
-				$("#loading_player").text('Adding songs to playlist\n' + (counter / totalTracks.length * 100).toFixed(0) + '% of songs added')
+				++counter;
+				$("#loading_player").text((counter / totalTracks.length * 100).toFixed(0) + '% of songs added to playlist')
 			}
 		})
 	})).then(function(data){
