@@ -400,7 +400,7 @@ def results():
     
     # creating a list of all the artists
     artist_names = []
-    for s in search_bid[:100]:
+    for s in search_bid:
         if 'artists' in s: 
             for x in s['artists']:
                 artist_names.append(search_artists(x['name']).data)
