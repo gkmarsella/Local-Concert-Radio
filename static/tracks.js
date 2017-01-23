@@ -12,7 +12,7 @@ $(function(){
 			contentType: 'application/json',
 			dataType: 'json',
 			success: function() {
-				if(wildCardCounter === 12){
+				if(wildCardCounter === 8){
 					setTimeout(function(){}, 5000);
 					wildCardCounter = 0;
 				}
