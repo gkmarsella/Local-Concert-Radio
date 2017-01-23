@@ -1,6 +1,6 @@
 $(function(){
 
-
+	var counter = 0;
 	var totalTracks = $('ul.hidden').children();
 	$.when.apply($, $('ul.hidden').children().map(function(i, el){
 		console.log($(el).data());
@@ -12,7 +12,7 @@ $(function(){
 			dataType: 'json',
 			success: function() {
 				++counter
-				$("#loading_player").text('Adding songs to playlist' + '<br>' + (counter / totalTracks.length * 100).toFixed(0) + '% of songs added')
+				$("#loading_player").text('Adding songs to playlist\n' + (counter / totalTracks.length * 100).toFixed(0) + '% of songs added')
 			}
 		})
 	})).then(function(data){

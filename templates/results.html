@@ -43,7 +43,8 @@
 
     <div class="col-sm-9">
         <div id="results-table-div">
-        <table id="results-table" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <h1 align="center"> Band Directory </h1>
+        <table id="results-table" class="table table-striped table-bordered" cellspacing="0" width="100%" style="border-radius: 10px;">
             <thead>
                 <tr>
                     <th> Artist Name </th>
@@ -55,12 +56,12 @@
             </thead>
             <tbody>
                 {% for s in search_bid %}
-                <tr>
-                    <td> {{s['artists'][0]['name']}} </td>
-                    <td> {{s['venue']['name']}} </td>
-                    <td> {{s['venue']['city']}} </td>
-                    <td> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
-                    <td> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
+                <tr>   
+                    <td> <img src="{{first_artist[s['id']]}}" style='height: 60px; width: 60px; border-radius: 30px; margin-right: 20px;'>{{s['artists'][0]['name']}} </td>
+                    <td style="padding-top: 2.5%;"> {{s['venue']['city']}} </td>
+                    <td style="padding-top: 2.5%;"> {{s['venue']['name']}} </td>
+                    <td style="padding-top: 2.5%;"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </td>
+                    <td style="padding-top: 2.5%;"> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
