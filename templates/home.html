@@ -6,16 +6,14 @@
 
 <header align="center" style="margin-top: 45px;">Local Concert Radio</header>
 
+	<div align="center">
+	    <div class="search-form" style="width: 361px; font-size: 20px">
+	    	discover new bands that are playing concerts near you! 
+	    	<form action="{{url_for('login')}}"><input class="btn btn-success" type="submit" value="Sign in"></form> with your spotify account to get started!
 
-	    <div class="search-form" style="float: left;">
-	    	Local Concert Radio is a web application designed to help you discover new bands that are playing concerts near you! We use your spotify account to build a playlist containing artists in 
+	    	<p> If you don't have a spotify account, <a target="_blank" href="https://www.spotify.com/us/signup/"><button class="btn btn-success"> Sign up here </button></a></p>
 	    </div>
-
-	   	<div class="search-form" style="float: right;">
-	    	Local Concert Radio uses your spotify account to build a playlist containing artists in your area. If you don't have a spotify account, you can <button class="btn btn-success"> Sign up here </button>
-			<div>If you have an account, <form action="{{url_for('login')}}"><input class="btn btn-success" type="submit" value="sign in to spotify get started"></form></div>
-	    </div>
-
+	</div>
 
 <!-- <div align="center" style="padding-top: 45px;"><form action="{{url_for('login')}}"><input class="btn btn-success" type="submit" value="Log in to start streaming music from bands playing in your area"></form></div> -->
 
