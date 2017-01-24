@@ -185,13 +185,13 @@ spotify = oauth.remote_app(
 )
 
 
-@app.route('/home')
+@app.route('/')
 def home():
     return render_template('home.html')
 
 # https://accounts.spotify.com/authorize?response_type=code&client_id=cbf5f680095e4cf1be818db85e9ac229&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback%3Fnext%3Dhttp%253A%252F%252Flocalhost%253A3000%252Fhome&scope=user-read-private+user-read-email+playlist-modify+playlist-modify-private
 # https://accounts.spotify.com/authorize?response_type=code&client_id=cbf5f680095e4cf1be818db85e9ac229&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fcallback&scope=user-read-private+user-read-email+playlist-modify+playlist-modify-private
-@app.route('/')
+@app.route('/index')
 def index():
     return redirect(url_for('login'))
 
