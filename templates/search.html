@@ -83,11 +83,6 @@
 			</select>
 			</div>
 
-
-<!-- 		<div class="form-group">
-		<input id="city" class="searchbar form-control" type="text" name="search-city" placeholder="enter a city">
-		</div> -->
-
 		<div class="form-group city-div">
 			<select id="city" name="search-city" class="searchbar form-control">
 				<option>City</option>
@@ -101,13 +96,6 @@
 		<input id="radius" class="searchbar form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
 		</div>
 
-<!-- 		<div class="form-group">
-		<input id="date-start" class="searchbar form-control" type="text" name="search-date-start" placeholder="From when" onfocus="(this.type='date')" onblur="(this.type='text')">
-		</div>
-		<div class="form-group">
-		<input id="date-end" class="searchbar form-control" type="text" name="search-date-end" placeholder="To when" onfocus="(this.type='date')" onblur="(this.type='text')">
-		</div> -->
-
 		<div class="form-group">
 		<input id="datepick" class="searchbar form-control" type="text" name="daterange" value="Date">
 		<script type="text/javascript">
@@ -120,7 +108,6 @@
 			    "opens": "center",
 			    "drops": "up"
 			}, function(start, end, label) {
-		  	console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 		});
 
 		});
@@ -133,10 +120,6 @@
 		</div>
 		</div>
 	</form>
-	<div class="loading">
-		<h2>Finding artists</h2>
-		<img class="loading" src="{{url_for('static', filename='images/radio.gif')}}">
-	</div>
 	
 
 
