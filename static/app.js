@@ -9,7 +9,7 @@ $(function(){
 		$(".loading-playlist ").removeClass("loading-playlist ");
 	});
 
-	// Adds a class to artist when delete from playlist button is pressed
+	// Adds a class to artist when 'delete from playlist' button is pressed
 	$(".delete-button").click(function(e){
 		$(this).parent().parent().toggleClass("remove-artist");
 	});
@@ -20,13 +20,6 @@ $(function(){
 		$(this).parent().parent().children(".red-x").toggle();
 	});
 
-	// $("#city").click(function(e){
-	// 	var selected = $(this).parent().parent().children('.state').children().val();
-	// 	$(this).addClass(selected);
-	// 	if($(this).children('.' + selected)){
-	// 		$(this).children('.' + selected).removeClass('hidden');
-	// 	}
-	// });
 
 	$("#state").change(function(e){
 		var stateCode = $(this).val();
@@ -93,9 +86,6 @@ $(function(){
 	$(document).ready(function(){
     	$('#results-table').DataTable();		
     });
-
-	    // $('input[name="daterange"]').daterangepicker();
-
-
+    
 });
 
