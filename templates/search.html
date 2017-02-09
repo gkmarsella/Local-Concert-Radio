@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 <body background="{{url_for('static', filename='images/live-green.jpg')}}" style="background-repeat: no-repeat; background-size: 100%">
-<!-- <script>document.write('<style>.create-playlist { display: none; }</style>');</script>
-<script>document.write('<style>#back-to-search { display: none; }</style>');</script>
-<script>document.write('<style>.fav { display: none; }</style>');</script> -->
-<!-- <script>document.write('<style>.navbar { display: none; }</style>');</script> -->
+<link rel="stylesheet" href="awesomplete.css" />
+<script src="awesomplete.js" async></script>
 
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" /> -->
+
  
 <!-- Include Date Range Picker -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-	<!-- <img src="{{url_for('static', filename='images/blank_marquee.jpg')}}"> -->
+
 	<header align="center">Local Concert Radio</header>
 	<h3 align="center">stream music from bands playing in your area</h3>
 
@@ -84,12 +82,13 @@
 			</div>
 
 		<div class="form-group city-div">
-			<select id="city" name="search-city" class="searchbar form-control">
-				<option>City</option>
-				{% for c in all_cities %}
-					<option class="{{c[-2:]}} hidden" value="{{c[:-2]}}">{{c[:-2]}}</option>
-				{% endfor %}
-			</select>
+				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text"/>
+				<datalist id="mylist">
+					{% for c in all_cities %}
+						<option class="{{c[-2:]}} hidden" value="{{c[:-2]}}">{{c[:-2]}}</option>
+					{% endfor %}
+				</datalist>
+
 		</div>
 
 		<div class="form-group">
