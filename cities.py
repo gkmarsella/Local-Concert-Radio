@@ -1,4 +1,4 @@
-all_cities = ['Aaronsburg' 'PA',
+cities = ['Aaronsburg' 'PA',
 'Abbeville' 'AL',
 'Abbeville' 'GA',
 'Abbeville' 'LA',
@@ -29736,3 +29736,10 @@ all_cities = ['Aaronsburg' 'PA',
 'Zurich' 'MT',
 'Zwingle' 'IA',
 'Zwolle' 'LA']
+
+all_cities = []
+
+
+for c in cities:
+    if c[:-2] not in all_cities:
+        all_cities.append(c[:-2])

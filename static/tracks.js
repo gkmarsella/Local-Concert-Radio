@@ -18,6 +18,8 @@ $(function(){
 		$("#loading_player").addClass("hidden");
 		$(".vertical-slider").addClass("hidden");
 		$("#spotify_player").append('<iframe src="' + data[0].url + '" width="100%" height="325" frameborder="0" allowtransparency="true"></iframe>');
+		$(".loading-text").remove();
+
 	})
 
 	$('.vertical-slider').unslider({
