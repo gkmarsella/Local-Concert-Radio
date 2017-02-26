@@ -85,7 +85,7 @@
 				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text"/>
 				<datalist id="mylist">
 					{% for c in all_cities %}
-						<option class="{{c[-2:]}} hidden" value="{{c[:-2]}}">{{c[:-2]}}</option>
+						<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
 					{% endfor %}
 				</datalist>
 

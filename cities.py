@@ -29739,7 +29739,6 @@ cities = ['Aaronsburg' 'PA',
 
 all_cities = []
 
-
 for c in cities:
     if c[:-2] not in all_cities:
         all_cities.append(c[:-2])
