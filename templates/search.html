@@ -82,7 +82,7 @@
 			</div>
 
 		<div class="form-group city-div">
-				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text"/>
+				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text" placeholder="City" />
 				<datalist id="mylist">
 					{% for c in all_cities %}
 						<option class="{{c}} hidden" value="{{c}}">{{c}}</option>

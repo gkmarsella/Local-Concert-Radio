@@ -363,7 +363,6 @@ def results():
                 artist_names.append(search_artists(x['name']).data)
 
 
-
     # matching all ids with their names
     artist_dict = {}
     for i in artist_names:
@@ -426,12 +425,6 @@ def get_tracks():
 
 
     return jsonify({'url':spotify_player_source})
-
-
-@app.route('/logout')
-def logout():
-    session.pop('spotify', None)
-    return redirect(url_for("home"))
 
 
 
