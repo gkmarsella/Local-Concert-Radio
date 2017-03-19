@@ -1,6 +1,6 @@
 body {
 	background-color: black;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	color: white;
 }
 
@@ -91,7 +91,7 @@ header {
 	margin-top: 110px;
 	font-size: 60px;
 	color: green;
-	font-family: 'Open Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
 	text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92)
 }
 
