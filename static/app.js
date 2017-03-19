@@ -86,6 +86,12 @@ $(function(){
 	$(document).ready(function(){
     	$('#results-table').DataTable();		
     });
+
+	$(".confirm").hover(function(){
+	    $(this).css("background-color", "#133e6e");
+	    }, function(){
+	    $(this).css("background-color", "#335983");
+	});
     
 });
 

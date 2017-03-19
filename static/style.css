@@ -75,7 +75,7 @@ body {
 	margin: 8px;
 	width: 199px;
 	margin: 20px;
-	background-color: #3eb43c;
+	background-color: #335983;
 	color: whitesmoke;
 	font-size: initial;
 }
@@ -90,7 +90,7 @@ body {
 header {
 	margin-top: 110px;
 	font-size: 60px;
-	color: green;
+	color: #2f4c76;
     font-family: 'Montserrat', sans-serif;
 	text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92)
 }
@@ -286,4 +286,10 @@ hr {
 }
 
 
- 
+ .confirm {
+ 	border-radius: 10px;
+    color: azure;
+    background-color: #335983;
+    border-width: 0px;
+    border-color: #9692f5;
+ }
