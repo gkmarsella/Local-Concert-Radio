@@ -82,10 +82,6 @@ body {
 
 
 
-h3 {
-    text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92);
-}
-
 .loading {
 	display: none;
 	visibility: hidden;
@@ -95,7 +91,7 @@ header {
 	margin-top: 110px;
 	font-size: 60px;
 	color: green;
-	font-family: 'Monoton';
+	font-family: 'Open Sans', sans-serif;
 	text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92)
 }
 
@@ -138,12 +134,11 @@ header {
 
 iframe {
 	margin-top: 50px;
-	height: 92%;
 	top: 10px;
 	left: 15px;
 	bottom: 0;
 	padding-right: 1%;
-	position: fixed;
+	/*position: fixed;*/
     width: initial;
 }
 
@@ -281,3 +276,14 @@ hr {
  body {
  	height: 100%;
  }
+
+ .table-striped > tbody > tr:nth-of-type(even) {
+    background-color: #112541;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #0b2d50;
+}
+
+
+ 
