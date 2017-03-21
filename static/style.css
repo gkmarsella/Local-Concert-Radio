@@ -89,10 +89,11 @@ body {
 
 header {
 	margin-top: 110px;
-	font-size: 60px;
+	font-size: 75px;
 	color: #2f4c76;
     font-family: 'Montserrat', sans-serif;
-	text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92)
+	text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92);
+	font-weight: bold;
 }
 
 /*Sort Cards*/
@@ -292,4 +293,8 @@ hr {
     background-color: #335983;
     border-width: 0px;
     border-color: #9692f5;
+ }
+
+ h3 {
+ 	font-family: 'Montserrat', sans-serif;
  }
