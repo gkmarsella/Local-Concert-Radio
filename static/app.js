@@ -9,17 +9,6 @@ $(function(){
 		$(".loading-playlist ").removeClass("loading-playlist ");
 	});
 
-	// Adds a class to artist when 'delete from playlist' button is pressed
-	$(".delete-button").click(function(e){
-		$(this).parent().parent().toggleClass("remove-artist");
-	});
-
-
-	// Places an x over artist image when delete from playlist button is pressed
-	$(".delete-button").click(function(e){
-		$(this).parent().parent().children(".red-x").toggle();
-	});
-
 
 	$("#state").change(function(e){
 		var stateCode = $(this).val();

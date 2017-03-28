@@ -10,7 +10,6 @@ from requests.utils import quote
 import json
 import time
 import psycopg2
-import datetime
 import cities
 
 
