@@ -24,6 +24,10 @@ $(function(){
 		} 
 	});
 
+	$("#submitbutton").click(function(e){
+		$("#loading-icon").removeClass("hidden");
+	})
+
 
 	// add event url and artist name to database
 	$(".event-button").click(function(e){

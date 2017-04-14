@@ -87,6 +87,10 @@ body {
 	visibility: hidden;
 }
 
+#hidden {
+	visibility: hidden;
+}
+
 header {
 	margin-top: 110px;
 	font-size: 75px;
