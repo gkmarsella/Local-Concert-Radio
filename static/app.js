@@ -9,6 +9,12 @@ $(function(){
 		$(".loading-playlist ").removeClass("loading-playlist ");
 	});
 
+	$(".submitbutton").hover(function(e){
+	
+	})
+
+
+
 
 	$("#state").change(function(e){
 		var stateCode = $(this).val();
