@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <body background="{{url_for('static', filename='images/soundwaves.jpg')}}" style="background-repeat: no-repeat; background-size: 100%">
-<link rel="stylesheet" href="awesomplete.css" />
-<script src="awesomplete.js" async></script>
 
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
@@ -99,6 +97,7 @@
 		<input id="radius" class="searchbar form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
 		</div>
 
+
 		<div class="form-group">
 		<input id="datepick" class="searchbar form-control" type="text" name="daterange" value="Date">
 		<script type="text/javascript">
@@ -117,13 +116,13 @@
 
 		</script>
 		</div>
+		<hr></hr>
 
 		<div class="form-group">
 		<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
 		</div>
-		</div>
 	</form>
-	
+
 
 
 
