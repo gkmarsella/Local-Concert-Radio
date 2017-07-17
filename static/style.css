@@ -303,3 +303,7 @@ hr {
  h3 {
  	font-family: 'Montserrat', sans-serif;
  }
+
+ .playlist-column {
+ 	height: 100%;
+ }
