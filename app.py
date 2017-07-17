@@ -362,6 +362,7 @@ def results():
                 artist_names.append(search_artists(x['name']).data)
 
 
+
     # matching all ids with their names
     artist_dict = {}
     for i in artist_names:
