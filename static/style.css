@@ -307,3 +307,7 @@ hr {
  .playlist-column {
  	height: 100%;
  }
+
+ #spotify_player {
+ 	height: 100%;
+ }
