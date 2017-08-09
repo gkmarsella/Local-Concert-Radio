@@ -87,6 +87,6 @@ $(function(){
 	    }, function(){
 	    $(this).css("background-color", "#335983");
 	});
-    
+	
 });
 

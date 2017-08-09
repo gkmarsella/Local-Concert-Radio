@@ -1,3 +1,5 @@
+
+
 body {
 	background-color: black;
 	font-family: 'Montserrat', sans-serif;
@@ -75,9 +77,10 @@ body {
 	margin: 8px;
 	width: 199px;
 	margin: 20px;
-	background-color: #335983;
+	background-color: #23d05f;
 	color: whitesmoke;
 	font-size: initial;
+	border-radius: 20px;
 }
 
 
@@ -200,11 +203,15 @@ hr {
 /*NAVBAR*/
 
 #top-divider{
-	margin-bottom: 60px;
+	margin-bottom: 30px;
 }
 
 .create-playlist {
 	width: 350px;
+}
+
+.logo-box{
+	margin-left: 2%;
 }
 
 
@@ -310,4 +317,8 @@ hr {
 
  #spotify_player {
  	height: 100%;
+ }
+
+ .logo {
+ 	height: 50px;
  }

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<body background="{{url_for('static', filename='images/soundwaves.jpg')}}" style="background-repeat: no-repeat; background-size: 100%">
+<body background="{{url_for('static', filename='images/cbackground.png')}}" style="background-repeat: no-repeat; background-size: 100%">
 
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
@@ -11,9 +11,7 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-
-	<header align="center">Local Concert Radio</header>
-	<h3 align="center">stream music from bands playing in your area</h3>
+	<h3 align="center">Stream music from bands playing in your area</h3>
 
 	<div id="loading-icon" class="hidden" align="center">
 		<img src="{{url_for('static', filename='images/pinwheel.svg')}}"></img>
@@ -85,6 +83,7 @@
 
 		<div class="form-group city-div">
 				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text" placeholder="City" />
+
 				<datalist id="mylist">
 					{% for c in all_cities %}
 						<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
