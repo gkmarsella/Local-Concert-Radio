@@ -11,7 +11,11 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
-	<h3 align="center">Stream music from bands playing in your area</h3>
+	<div class="logo-box">
+		<img class="logo" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}" alt="">
+	</div>
+
+	<div class="head">Stream music from bands playing in your area </h3>
 
 	<div id="loading-icon" class="hidden" align="center">
 		<img src="{{url_for('static', filename='images/pinwheel.svg')}}"></img>
