@@ -11,9 +11,13 @@ import json
 import time
 import psycopg2
 import cities
+import googlemaps
+from datetime import datetime
 
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
+
+gmaps = googlemaps.Client(key='AIzaSyDAeT2VLSQrWs-fxBTnARZBGcNTf_qJ-nI')
 
 
 
@@ -335,6 +339,8 @@ def search():
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
+
+
     db_to_favorites()
     # Getting user ID to create a playlist
     user_id = session['user_name']
@@ -421,7 +427,11 @@ def get_tracks():
             time.sleep(1.00)
 
 
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
+    iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
+
+    iframe_embed = iframe_data.replace('.com', '.com/embed')
+
+    spotify_player_source = iframe_embed
 
 
     return jsonify({'url':spotify_player_source})

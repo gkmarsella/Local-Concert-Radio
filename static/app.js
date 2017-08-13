@@ -87,6 +87,12 @@ $(function(){
 	    }, function(){
 	    $(this).css("background-color", "#335983");
 	});
+
+		$("#myTextInput").keyup(function() {
+	    var text = $(this).val();
+	    text = processText(text);
+	    $("#secondTextField").val(text);
+	});
 	
 });
 

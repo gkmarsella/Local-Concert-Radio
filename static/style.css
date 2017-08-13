@@ -140,16 +140,6 @@ header {
 	margin-left: 9px;
 }
 
-iframe {
-	height: 100%;
-	margin-top: 50px;
-	top: 10px;
-	left: 15px;
-	bottom: 0;
-	padding-right: 1%;
-	/*position: fixed;*/
-    width: initial;
-}
 
 /*CARDS*/
 
@@ -315,8 +305,10 @@ hr {
  	height: 100%;
  }
 
+
  #spotify_player {
  	height: 100%;
+ 	position: fixed;
  }
 
  .logo {

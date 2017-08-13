@@ -15,18 +15,9 @@ $(function(){
 			}
 		})
 	})).then(function(data){
-		$("#loading_player").addClass("hidden");
-		$(".vertical-slider").addClass("hidden");
-		$("#spotify_player").append('<iframe src="' + data[0].url + '" width="100%" height="325" frameborder="0" allowtransparency="true"></iframe>');
-		$(".loading-text").remove();
-
+		$("#loading_player").addClass("hidden")
+		$(".loading-text").addClass("hidden")
+		$("#spotify_player").append('<iframe src="' + data[0].url + '" width="100%" height="100%" frameborder="0" allowtransparency="true"></iframe>');
 	})
 
-	$('.vertical-slider').unslider({
-		animation: 'vertical',
-		autoplay: true,
-		infinite: true,
-		nav: false,
-		arrows: false
-	});
 });

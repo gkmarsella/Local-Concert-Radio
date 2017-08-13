@@ -6,9 +6,6 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
 <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/unslider/2.0.3/css/unslider-dots.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/unslider/2.0.3/css/unslider.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/unslider/2.0.3/js/unslider-min.js"></script>
 <script>
     $(document).ready(function(){
       $('#results-table').DataTable();    
@@ -52,20 +49,13 @@
     </div>
 
 
+
     <div class="col-sm-3 playlist-column">
       <h2 class="loading-text"> Loading Playlist </h2>
       <div id="spotify_player"></div>
       <div id="loading_player"></div>
 
-           <div class="vertical-slider">
-               <ul class="scrolling_images">
-                   {% for s in search_bid %}
-                       {% if first_artist[s['id']] and first_artist[s['id']] != "https://s3.amazonaws.com/bit-photos/artistLarge.jpg" %}
-                           <li><img src="{{first_artist[s['id']]}}" alt="" height="300px" width="300px"></li>
-                       {% endif %}
-                   {% endfor %}
-               </ul>
-           </div>
+           
        
 
        <li class="hidden pid" data-playlist="{{playlist_id}}" data-user="{{user_id}}"></li>
