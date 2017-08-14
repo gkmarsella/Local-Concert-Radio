@@ -1,16 +1,16 @@
 
-
-body {
-	background-color: black;
+body { 
+	background-image: url(images/cbackground.png) ;
+	background-position: center center;
+	background-repeat:  no-repeat;
+	background-attachment: fixed;
+	background-size:  cover;
+	background-color: #999;
+	background-color: rgba(0, 0, 0, 0.26);
+	background-blend-mode: darken;
 	font-family: 'Montserrat', sans-serif;
 	color: white;
 }
-
-.table-condensed {
-	background-color: white;
-	color: black;
-}
-
 
 
 /*search form box*/
@@ -99,7 +99,6 @@ header {
 	font-size: 75px;
 	color: #2f4c76;
     font-family: 'Montserrat', sans-serif;
-	text-shadow: 4px -2px 3px rgba(0, 0, 0, 0.92);
 	font-weight: bold;
 }
 
@@ -268,15 +267,11 @@ hr {
 	padding-right: 1%;
  }
 
- html {
+ html, body {
  	height: 100%;
  }
 
  head {
- 	height: 100%;
- }
-
- body {
  	height: 100%;
  }
 
@@ -299,6 +294,12 @@ hr {
 
  h3 {
  	font-family: 'Montserrat', sans-serif;
+ }
+
+ h2 {
+ 	font-family: 'Montserrat', sans-serif;
+ 	margin-top: 4%;
+    margin-left: 1%;
  }
 
  .playlist-column {

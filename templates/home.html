@@ -1,18 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
 <script>document.write('<style>.navbar { display: none; }</style>');</script>
-<body background="{{url_for('static', filename='images/cbackground.png')}}" style="background-repeat: no-repeat; background-size: 100%">
+
+
+
+
+
 
 <div class="logo-box">
 	<img class="logo" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}" alt="">
 </div>
 
 
-	<h3 align="left">Stream music from bands playing in your area</h3>
+	<h2 align="left">Stream music from bands playing in your area</h2>
 
 
 	<div align="center">
-	    <div class="search-form" style="width: 361px; font-size: 18px; border-radius: 10px; font-family: sans-serif;">
+	    <div class="search-form" style="width: 361px; font-size: 18px; border-radius: 10px; font-family: sans-serif; margin-top: 15%;">
 
 	    	<form action="{{url_for('login')}}"><input style="width: 255px;" class="form-control" id="submitbutton" type="submit" value="Log in with Spotify"></form>
 	    </div>

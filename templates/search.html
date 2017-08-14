@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-<body background="{{url_for('static', filename='images/cbackground.png')}}" style="background-repeat: no-repeat; background-size: 100%">
 
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
@@ -87,20 +86,22 @@
 			</select>
 			</div>
 
-		<div class="form-group city-div">
-				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text" placeholder="City" />
 
-				<datalist id="mylist">
-					{% for c in all_cities %}
-						<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
-					{% endfor %}
-				</datalist>
+			<div class="form-group city-div">
+					<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text" placeholder="City" />
 
-		</div>
+					<datalist id="mylist">
+						{% for c in all_cities %}
+							<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
+						{% endfor %}
+					</datalist>
+
+			</div>
 
 		<div class="form-group">
 		<input id="radius" class="searchbar form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
 		</div>
+
 
 
 		<div class="form-group">
@@ -127,7 +128,6 @@
 		<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
 		</div>
 	</form>
-
 
 
 

@@ -334,12 +334,12 @@ def db_to_favorites():
 @app.route('/search', methods=["GET"])
 def search():
     db_to_favorites()
-    return render_template("search.html", all_cities=cities.all_cities)
+    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+    return render_template("search.html", all_cities=cities.all_cities, user_id=user_id)
 
 
 @app.route('/results', methods=["GET", "POST"])
 def results():
-
 
     db_to_favorites()
     # Getting user ID to create a playlist
@@ -413,7 +413,6 @@ def results():
 
 @app.route('/get_tracks', methods=["GET", "POST"])
 def get_tracks():
-
 
     user_id = session['user_name']
     playlist_id = user_playlists().data['items'][0]['id']
