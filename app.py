@@ -186,7 +186,8 @@ spotify = oauth.remote_app(
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    get_user = session['user_name']
+    return render_template('home.html', get_user=get_user)
 
 @app.route('/index')
 def index():
@@ -220,6 +221,8 @@ def spotify_authorized():
 
     user_id = spotify.get("https://api.spotify.com/v1/me").data
 
+    get_user = session['user_name']
+
 
 
     if User.query.filter_by(user_name=user_id['id']).first() is None:
@@ -231,7 +234,7 @@ def spotify_authorized():
 
     # Save some info to the DB
     db_to_favorites()
-    return render_template("search.html",all_cities=cities.all_cities)
+    return render_template("search.html",all_cities=cities.all_cities, get_user=get_user)
 
 
 
@@ -330,12 +333,14 @@ def db_to_favorites():
     get_user = User.query.filter_by(user_name=session['user_name']).first()
     g.events = get_user.events
 
+def find_user():
+    user_id = session['user_name']
+    return user_id
 
-@app.route('/search', methods=["GET"])
+@app.route('/search', methods=["GET", "POST"])
 def search():
     db_to_favorites()
-    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
-    return render_template("search.html", all_cities=cities.all_cities, user_id=user_id)
+    return render_template("search.html", all_cities=cities.all_cities, get_user=get_user)
 
 
 @app.route('/results', methods=["GET", "POST"])
@@ -437,6 +442,9 @@ def get_tracks():
 
 
 
+@app.route('/logout', methods=["GET", "POST"])
+def logout():
+    return AuthenticationClient.clearCookies(getApplication());
 
 ##################################################################################
 ######################### ERROR PAGES ############################################
