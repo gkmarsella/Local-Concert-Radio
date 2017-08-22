@@ -11,13 +11,22 @@
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
 
-<!-- <button type="submit" action="{{url_for('logout')}}" method="GET">{{get_user}}</button> -->
 
 
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">
+	        <img class="logo" alt="Brand" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}">
+	      </a>
+	    </div>
+	    <p class="navbar-text">Signed in as <button type="submit" action="{{url_for('logout')}}" method="GET">{{get_user}}</button></p>
+	  </div>
+	</nav>
 
-	<div class="logo-box">
+<!-- 	<div class="logo-box">
 		<img class="logo" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}" alt="">
-	</div>
+	</div> -->
 
 	<div class="head">Stream music from bands playing in your area </h3>
 
