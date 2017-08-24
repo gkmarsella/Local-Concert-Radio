@@ -313,5 +313,10 @@ hr {
  }
 
  .logo {
- 	height: 50px;
+ 	height: 45px;
+ 	margin-top: -14px;
+ }
+
+ .navbar-text {
+ 	float: right;
  }

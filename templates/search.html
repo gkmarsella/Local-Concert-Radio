@@ -20,13 +20,9 @@
 	        <img class="logo" alt="Brand" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}">
 	      </a>
 	    </div>
-	    <p class="navbar-text">Signed in as <button type="submit" action="{{url_for('logout')}}" method="GET">{{get_user}}</button></p>
+	    <p class="navbar-text">Signed in as {{get_user}} </p>
 	  </div>
 	</nav>
-
-<!-- 	<div class="logo-box">
-		<img class="logo" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}" alt="">
-	</div> -->
 
 	<div class="head">Stream music from bands playing in your area </h3>
 

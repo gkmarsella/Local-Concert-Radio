@@ -186,8 +186,9 @@ spotify = oauth.remote_app(
 
 @app.route('/')
 def home():
-    get_user = session['user_name']
-    return render_template('home.html', get_user=get_user)
+    # use spotify_authorize
+    # get_user = session['user_name']
+    return render_template('home.html')
 
 @app.route('/index')
 def index():
