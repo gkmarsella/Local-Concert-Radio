@@ -222,7 +222,7 @@ def spotify_authorized():
 
     user_id = spotify.get("https://api.spotify.com/v1/me").data
 
-    get_user = session['user_name']
+    # get_user = session['user_name']
 
 
 
@@ -235,7 +235,7 @@ def spotify_authorized():
 
     # Save some info to the DB
     db_to_favorites()
-    return render_template("search.html",all_cities=cities.all_cities, get_user=get_user)
+    return render_template("search.html",all_cities=cities.all_cities)
 
 
 
