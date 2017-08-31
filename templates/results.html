@@ -17,7 +17,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="{{url_for('login')}}">
           <img class="logo" alt="Brand" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}">
         </a>
       </div>
@@ -61,10 +61,10 @@
 
     <div class="col-sm-9">
         <div id="results-table-div">
-          <ul>
+          <ul id="results-list">
             {% for s in search_bid %}
-            <a href="" style="float: right;"><img src="{{first_artist[s['id']]}}" style='height: 60px; width: 60px; border-radius: 30px; margin-right: 20px;'></a>
-            <p> {{s['artists'][0]['name']}} </p>
+            <a href="" style="float: right;"><img src="{{first_artist[s['id']]}}" style='height: 60px; width: 60px; border-radius: 30px; margin-right: 20px;' class="band-pic"></a>
+            <p class="artist-name"> {{s['artists'][0]['name']}} </p>
             <p style="margin-bottom: 10px;"> {{s['venue']['name']}}, {{s['venue']['city']}}</p>
             <p style="margin-bottom: 10px;"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </p>
             <p style="margin-bottom: 10px;"> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></p>
