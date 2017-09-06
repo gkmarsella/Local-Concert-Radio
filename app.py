@@ -291,6 +291,28 @@ def user_playlists():
     return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
 
 
+def add_multiple():
+    # add up to 100 tracks in an array
+    user_id = session['user_name']
+    playlist_id = user_playlists().data['items'][0]['id']
+
+    print(request.json)
+    name = wild_card(request.json['artist']).data
+
+    if 'tracks' in name and (len(name['tracks'])) > 0:
+        if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
+            add_song(playlist_id, name['tracks']['items'][0]['id'])
+            time.sleep(1.00)
+
+
+    iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
+
+    iframe_embed = iframe_data.replace('.com', '.com/embed')
+
+    spotify_player_source = iframe_embed
+        
+    return spotify.post("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists/" +  quote(playlist, safe='') + "/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+
 # ************************************************************************************************************************
 #                                               REQUESTS
 # ************************************************************************************************************************
@@ -337,6 +359,8 @@ def db_to_favorites():
 def find_user():
     user_id = session['user_name']
     return user_id
+
+
 
 @app.route('/search', methods=["GET", "POST"])
 def search():
@@ -412,6 +436,8 @@ def results():
 
     spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
 
+
+    from IPython import embed; embed();
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
 
