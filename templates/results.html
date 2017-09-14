@@ -14,6 +14,8 @@
 
 <!-- <h1>{{user_id}}</h1> -->
 
+
+
 <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -78,25 +80,12 @@
 
 
     <div class="col-sm-3 playlist-column">
-      <h2 class="loading-text"> Loading Playlist </h2>
-      <div id="spotify_player"></div>
-      <div id="loading_player"></div>
-
-           
-       
-
-       <li class="hidden pid" data-playlist="{{playlist_id}}" data-user="{{user_id}}"></li>
-       <ul class="hidden">
-
-       {% for k, v in names_no_feat.items() %}
-           <li data-artist="{{ k }}" data-id="{{ v }}" ></li>
-       {% endfor %}
-       </ul> 
+      <iframe src={{spotify_player_source}} width="100%" height="100%" frameborder="0" allowtransparency="true"></iframe>
     </div>
     
 </div>
 </div>
 
-    <script src="{{url_for('static', filename='tracks.js') }}"></script>
+    <!-- <script src="{{url_for('static', filename='tracks.js') }}"></script> -->
 
 {% endblock %}

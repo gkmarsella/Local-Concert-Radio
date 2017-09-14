@@ -13,7 +13,7 @@ import psycopg2
 import cities
 import googlemaps
 from datetime import datetime
-
+import urllib
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
@@ -262,7 +262,7 @@ def create_playlist():
 
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
-    new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "Your Playlist"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
+    new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "GeoConcert"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
     return new_playlist
 
 
@@ -291,27 +291,12 @@ def user_playlists():
     return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
 
 
-def add_multiple():
+def add_multiple(ids, playlist_id):
     # add up to 100 tracks in an array
     user_id = session['user_name']
-    playlist_id = user_playlists().data['items'][0]['id']
+    id_str = ",".join(ids)
 
-    print(request.json)
-    name = wild_card(request.json['artist']).data
-
-    if 'tracks' in name and (len(name['tracks'])) > 0:
-        if name['tracks'].get('items') is not None and len(name['tracks']['items']) > 0 and name['tracks']['items'][0].get('id') is not None:
-            add_song(playlist_id, name['tracks']['items'][0]['id'])
-            time.sleep(1.00)
-
-
-    iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
-
-    iframe_embed = iframe_data.replace('.com', '.com/embed')
-
-    spotify_player_source = iframe_embed
-        
-    return spotify.post("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists/" +  quote(playlist, safe='') + "/tracks?position=0&uris=spotify%3Atrack%3A{}".format(quote(song)), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
+    return spotify.post("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists/" +  quote(playlist_id, safe='') + "/tracks?uris=" + quote(ids, safe=''), headers={"Accept": 'application/json', "Authorization": "Bearer"}, format='json')
 
 # ************************************************************************************************************************
 #                                               REQUESTS
@@ -412,6 +397,28 @@ def results():
         if 'artists' in i and 'items' in i['artists'] and len(i['artists']['items']) > 0:
             just_names.append(i['artists']['items'][0]['name'])  
 
+    just_ids = []
+    for i in artist_names:
+        if 'artists' in i and 'items' in i['artists'] and len(i['artists']['items']) > 0:
+            just_ids.append(i['artists']['items'][0]['id']) 
+
+
+    artist_tracks = []
+    for i in just_ids:
+        name = top_tracks(i).data
+        if 'tracks' in name and (len(name['tracks'])) > 0:
+                if name['tracks'][0]['id'] is not None and name['tracks'][0]['id'] is not None:
+                    artist_tracks.append('spotify:track:' + name['tracks'][0]['id'])   
+    
+
+
+    # song_ids = []
+    # for i in artist_names:
+    #     if len(i['artists']['items']) > 0:
+    #         song_ids.append('spotify:track:' + i['artists']['items'][0]['id'])
+
+    # song_string = ",".join(song_ids)
+
 
     # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
     names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
@@ -434,10 +441,17 @@ def results():
 ##################################################################################
 ##################################################################################
 
-    spotify_player_source = "https://embed.spotify.com/?uri=spotify%3Auser%3A" + user_id + "%3Aplaylist%3A{}".format(quote(playlist_id))
+    song_string = ",".join(artist_tracks)
+
+    add_multiple(song_string, playlist_id)
+
+    iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
+
+    iframe_embed = iframe_data.replace('.com', '.com/embed')
+
+    spotify_player_source = iframe_embed
 
 
-    from IPython import embed; embed();
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
 
