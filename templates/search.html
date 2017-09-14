@@ -20,7 +20,7 @@
 	        <img class="logo" alt="Brand" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}">
 	      </a>
 	    </div>
-	    <p class="navbar-text">Signed in as {{get_user}} </p>
+	    <!-- <p class="navbar-text">Signed in as {{get_user}} </p> -->
 	  </div>
 	</nav>
 
@@ -30,7 +30,47 @@
 		<img src="{{url_for('static', filename='images/pinwheel.svg')}}"></img>
 	</div>
 
+<!-- <form>
+  <div class="row">
+    <div class="col state">
+		<input name="search-city" id="city" class="awesomeplete form-control" list="mylist" type="text" placeholder="City" />
 
+		<datalist id="mylist">
+			{% for c in all_cities %}
+				<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
+			{% endfor %}
+		</datalist>
+    </div>
+
+    <div class="col">
+    	<input id="radius" class="form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
+    </div>
+
+    <div class="col">
+    	<input id="datepick" class="form-control" type="text" name="daterange" value="Date">
+		<script type="text/javascript">
+		$(function() {
+		    $('input[name="daterange"]').daterangepicker();
+
+		    $('#datepick').daterangepicker({
+			    "autoApply": true,
+			    "showCustomRangeLabel": false,
+			    "opens": "center",
+			    "drops": "up"
+			}, function(start, end, label) {
+		});
+
+		});
+
+		</script>
+    </div>
+
+    <div class="col">
+		<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
+	</div>
+
+  </div>
+</form> -->
 
 
 
@@ -95,18 +135,17 @@
 			</div>
 
 			<div class="form-group city-div">
-					<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text" placeholder="City" />
+				<input name="search-city" id="city" class="awesomeplete searchbar form-control" list="mylist" type="text" placeholder="City" />
 
-					<datalist id="mylist">
-						{% for c in all_cities %}
-							<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
-						{% endfor %}
-					</datalist>
-
+				<datalist id="mylist">
+					{% for c in all_cities %}
+						<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
+					{% endfor %}
+				</datalist>
 			</div>
 
 		<div class="form-group">
-		<input id="radius" class="searchbar form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
+			<input id="radius" class="searchbar form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
 		</div>
 
 
@@ -129,6 +168,7 @@
 
 		</script>
 		</div>
+
 		<hr></hr>
 
 		<div class="form-group">
