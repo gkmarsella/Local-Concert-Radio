@@ -436,6 +436,8 @@ def results():
 ##################################################################################
 ##################################################################################
 
+    from IPython import embed; embed();
+
     song_string = ",".join(artist_tracks)
 
     add_multiple(song_string, playlist_id)
@@ -444,7 +446,9 @@ def results():
 
     iframe_embed = iframe_data.replace('.com', '.com/embed')
 
-    spotify_player_source = iframe_embed
+    https_iframe = iframe_embed.replace('http', 'https')
+
+    spotify_player_source = https_iframe
 
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
