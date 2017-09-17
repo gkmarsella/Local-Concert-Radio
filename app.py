@@ -11,9 +11,7 @@ import json
 import time
 import psycopg2
 import cities
-import googlemaps
 from datetime import datetime
-import urllib
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
