@@ -15,9 +15,6 @@ from datetime import datetime
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
-gmaps = googlemaps.Client(key='AIzaSyDAeT2VLSQrWs-fxBTnARZBGcNTf_qJ-nI')
-
-
 
 app = Flask(__name__)
 app.debug = True
