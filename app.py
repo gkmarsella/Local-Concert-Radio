@@ -436,8 +436,6 @@ def results():
 ##################################################################################
 ##################################################################################
 
-    from IPython import embed; embed();
-
     song_string = ",".join(artist_tracks)
 
     add_multiple(song_string, playlist_id)
