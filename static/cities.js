@@ -29766,13 +29766,16 @@ var states = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.whitespace,
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   // `states` is an array of state names defined in "The Basics"
-  local: states
+  local: states,
+   limit: 10
 });
 
 $('#bloodhound .typeahead').typeahead({
   hint: true,
   highlight: true,
-  minLength: 1
+  minLength: 1,
+  selectable: 'Typeahead-selectable',
+  limit: 10
 },
 {
   name: 'states',
