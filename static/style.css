@@ -73,10 +73,7 @@ body {
 }
 
 #submitbutton {
-	display: block;
-	margin: 8px;
 	width: 199px;
-	margin: 20px;
 	background-color: #23d05f;
 	color: whitesmoke;
 	font-size: initial;

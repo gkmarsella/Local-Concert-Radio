@@ -278,10 +278,7 @@ def add_song(playlist, song):
 
 
 def user_playlists():
-    print("SESSION DATA", session["user_name"])
-    res = spotify.get("https://api.spotify.com/v1/me")
-    print("GET REQUEST DATA", res.data)
-    print("HEADERS", res._resp.headers)
+
     user_id = session['user_name']
     return spotify.get("https://api.spotify.com/v1/users/" +  quote(user_id, safe='')  + "/playlists", headers={"Accept": 'application/json', "Authorization": "Bearer"})
 
@@ -360,9 +357,17 @@ def results():
     date_end = date[13:17] + '-' + date[9:11] + '-' + date[11:13]
     dates = date_start + ',' + date_end
 
+    city_arg = request.args.get('search-city')
+    city = city_arg[:-4]
+
+    state_arg = request.args.get('search-city')
+    state = state_arg[-2:]
+
+
+
     create_playlist()
 
-    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + dates + "&location=" + request.args.get('search-city') + "," + request.args.get('search-state') + "&radius=" + request.args.get('search-radius'))
+    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + dates + "&location=" + city + "," + state + "&radius=" + request.args.get('search-radius'))
     search_bid = search_bid.json()
 
 
@@ -404,15 +409,6 @@ def results():
         if 'tracks' in name and (len(name['tracks'])) > 0:
                 if name['tracks'][0]['id'] is not None and name['tracks'][0]['id'] is not None:
                     artist_tracks.append('spotify:track:' + name['tracks'][0]['id'])   
-    
-
-
-    # song_ids = []
-    # for i in artist_names:
-    #     if len(i['artists']['items']) > 0:
-    #         song_ids.append('spotify:track:' + i['artists']['items'][0]['id'])
-
-    # song_string = ",".join(song_ids)
 
 
     # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)

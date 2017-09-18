@@ -4,6 +4,8 @@
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="static/typeahead.js"></script>
+<script type="text/javascript" src="static/cities.js"></script>
 
  
 <!-- Include Date Range Picker -->
@@ -30,52 +32,89 @@
 		<img src="{{url_for('static', filename='images/pinwheel.svg')}}"></img>
 	</div>
 
-<!-- <form>
-  <div class="row">
-    <div class="col state">
-		<input name="search-city" id="city" class="awesomeplete form-control" list="mylist" type="text" placeholder="City" />
 
-		<datalist id="mylist">
-			{% for c in all_cities %}
-				<option class="{{c}} hidden" value="{{c}}">{{c}}</option>
-			{% endfor %}
-		</datalist>
-    </div>
 
-    <div class="col">
-    	<input id="radius" class="form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
-    </div>
 
-    <div class="col">
-    	<input id="datepick" class="form-control" type="text" name="daterange" value="Date">
-		<script type="text/javascript">
-		$(function() {
-		    $('input[name="daterange"]').daterangepicker();
 
-		    $('#datepick').daterangepicker({
-			    "autoApply": true,
-			    "showCustomRangeLabel": false,
-			    "opens": "center",
-			    "drops": "up"
-			}, function(start, end, label) {
-		});
 
-		});
 
-		</script>
-    </div>
 
-    <div class="col">
-		<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
-	</div>
+<!-- 
+<div align="center" id="search-form">
+	<form>
+	  <div class="row">
 
+
+
+
+	    <div class="col">
+	    	
+	    </div>
+
+	    <div class="col">
+	    	<input id="datepick" class="form-control" type="text" name="daterange" value="Date">
+			<script type="text/javascript">
+			$(function() {
+			    $('input[name="daterange"]').daterangepicker();
+
+			    $('#datepick').daterangepicker({
+				    "autoApply": true,
+				    "showCustomRangeLabel": false,
+				    "opens": "center",
+				    "drops": "up"
+				}, function(start, end, label) {
+			});
+
+			});
+
+			</script>
+	    </div>
+
+	    <div class="col">
+			<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
+		</div>
+
+	  </div>
+	</form>
+</div>
+ -->
+
+<form action="{{url_for('results')}}" method="GET" class="form-inline">
+  <label class="sr-only" for="inlineFormInput">City</label>
+  	    <div id="bloodhound" class="input-group mb-2 mr-sm-2 mb-sm-0">
+	  		<input id="bloodhound" name="search-city" class="typeahead form-control" type="text" placeholder="City">
+		</div>
+
+  <label class="sr-only" for="inlineFormInputGroup">Radius</label>
+  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+    <input class="form-control" type="number" min="0" name="search-radius" placeholder="miles around city">
   </div>
-</form> -->
 
 
+  <label class="sr-only" for="inlineFormInputGroup">Date</label>
+  <input class="form-control" type="text" name="daterange" value="Date">
+			<script type="text/javascript">
+			$(function() {
+			    $('input[name="daterange"]').daterangepicker();
+
+			    $('#datepick').daterangepicker({
+				    "autoApply": true,
+				    "showCustomRangeLabel": false,
+				    "opens": "center",
+				    "drops": "up"
+				}, function(start, end, label) {
+			});
+
+			});
+
+			</script>
+
+	<label class="sr-only" for="inlineFormInputGroup">Submit</label>
+  <input id="submitbutton" type="submit" value="Search Artists" class="form-control">
+</form>
 
 
-	<div align="center" id="search-form">
+	<!-- <div align="center" id="search-form">
 		<form action="{{url_for('results')}}" method="GET" class="search-form">
   			<div class="form-group state">
 			<select name="search-state" id="state" class="searchbar form-control">
@@ -174,7 +213,7 @@
 		<div class="form-group">
 		<input id="submitbutton" type="submit" value="Search Artists" class="form-control">
 		</div>
-	</form>
+	</form> -->
 
 
 
