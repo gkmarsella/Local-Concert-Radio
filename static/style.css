@@ -6,10 +6,56 @@ body {
 	background-attachment: fixed;
 	background-size:  cover;
 	background-color: #999;
-	background-color: rgba(0, 0, 0, 0.26);
+	background-color: rgba(0, 0, 0, 0.6);
 	background-blend-mode: darken;
 	font-family: 'Montserrat', sans-serif;
 	color: white;
+}
+
+ .navbar.transparent.navbar-inverse .navbar-inner {
+   background: rgba(0,0,0,0.4);
+}
+
+@media screen and (max-width: 770px) {
+   #city-submit { display: none }
+}
+
+.ta-div {
+	width: 100%;
+}
+
+input {
+    outline: none;
+}
+
+.sc-form {
+	width: 100%;
+    position: relative;
+    vertical-align: top;
+    background-color: transparent;
+    border: 0;
+}
+
+input[type="submit"] {
+    font-family: FontAwesome;
+}
+
+#city-search {
+    width: 200px;
+    height: 20px;
+    padding-right: 50px;
+}
+
+#city-submit {
+    margin-left: -2px;
+    height: 37px;
+    width: 50px;
+    background: rgb(255, 255, 255);
+    color: black;
+    border: 0;
+    -webkit-appearance: none;
+    vertical-align: top;
+    border-radius: 3px;
 }
 
 
@@ -24,9 +70,7 @@ body {
 	padding: 20px;
 	display: block;
 	width: 50%;
-	margin-top: 74px;
-    background-color: rgba(15, 17, 1, 0.32);
-    background-size: 10px;
+	margin-top: 55px;
     width: 275px;
     margin-left: auto;
     padding: 20px;
@@ -74,10 +118,6 @@ body {
 
 #submitbutton {
 	width: 199px;
-	background-color: #23d05f;
-	color: whitesmoke;
-	font-size: initial;
-	border-radius: 20px;
 }
 
 
@@ -189,7 +229,7 @@ hr {
 /*NAVBAR*/
 
 #top-divider{
-	margin-bottom: 30px;
+	margin-bottom: 10%;
 }
 
 .create-playlist {
@@ -197,7 +237,7 @@ hr {
 }
 
 .logo-box{
-	margin-left: 2%;
+	margin-left: -2%;
 }
 
 
@@ -312,7 +352,7 @@ hr {
  }
 
  .logo {
- 	height: 45px;
+ 	height: 80px;
  	margin-top: -14px;
  }
 
