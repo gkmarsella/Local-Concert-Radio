@@ -372,7 +372,7 @@ def results():
     except KeyError:
 
         flash('Please try again!')
-        return redirect(url_for('search'))
+        return redirect(url_for('home'))
 
 
 
@@ -458,7 +458,7 @@ def results():
     except KeyError:
 
         flash('Please try again!')
-        return redirect(url_for('search'))
+        return redirect(url_for('home'))
 
 
 
