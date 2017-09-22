@@ -13,7 +13,7 @@ import psycopg2
 import cities
 import datetime
 
-artist_counter = 0
+
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
@@ -385,6 +385,7 @@ def results():
     
     # creating a list of all the artists
     artist_names = []
+    artist_counter = 0
     for s in search_bid:
         if artist_counter == 25:
             break
