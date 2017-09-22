@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, session, g
+from flask import Flask, render_template, request, redirect, url_for, jsonify, session, g, flash
 from flask_modus import Modus
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -433,16 +433,22 @@ def results():
 
     add_multiple(song_string, playlist_id)
 
-    iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
+    try:
+        
+        iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
 
-    iframe_embed = iframe_data.replace('.com', '.com/embed')
+        iframe_embed = iframe_data.replace('.com', '.com/embed')
 
-    https_iframe = iframe_embed.replace('http', 'https')
+        https_iframe = iframe_embed.replace('http', 'https')
 
-    spotify_player_source = https_iframe
+        spotify_player_source = https_iframe
 
-    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
+        return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
+    except KeyError:
+
+        flash('Please try again!')
+        return redirect(url_for('/'))
 
 
 
