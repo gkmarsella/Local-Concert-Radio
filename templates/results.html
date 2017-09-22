@@ -28,16 +28,21 @@
     <div class="col-sm-9">
         <div id="results-table-div">
           <ul id="results-list">
-            {% for s in search_bid %}
-            <div class="results-row">          
-                <div href="" style="float: right;"><img class="band-pic" src="{{first_artist[s['id']]}}" ></div>
-                <p class="artist-name"> {{s['artists'][0]['name']}} </p>
-                <p class="artist-venue"> {{s['venue']['name']}}, {{s['venue']['city']}}</p>
-                <p class="artist-date"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </p>
-                <p class="artist-ticket"> <a href="{{s['ticket_url']}}" target="_blank" style="">Buy Tickets</a></p>
-            </div>
-    <hr></hr>
-            {% endfor %}              
+            {% if not search_bid.get('errors')  %}
+                {% for s in search_bid %}
+                    <div class="results-row">          
+                        <div href="" style="float: right;"><img class="band-pic" src="{{first_artist[s['id']]}}" ></div>
+                        <p class="artist-name"> {{s['artists'][0]['name']}} </p>
+                        <p class="artist-venue"> {{s['venue']['name']}}, {{s['venue']['city']}}</p>
+                        <p class="artist-date"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </p>
+                        <p class="artist-ticket"> <a href="{{s['ticket_url']}}" target="_blank" style="color: #35bd5d">Buy Tickets</a></p>
+                    </div>
+        <hr></hr>
+                {% endfor %}
+            
+            {% else %}              
+                <h1>No results found!</h1>
+            {% endif %}
           </ul>
 
         </div>
