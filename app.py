@@ -364,8 +364,17 @@ def results():
 
     create_playlist()
 
-    search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + dates + "&location=" + city + "," + state + "&radius=" + request.args.get('search-radius'))
-    search_bid = search_bid.json()
+    try:
+
+        search_bid = requests.get("http://api.bandsintown.com/events/search?format=json&api_version=2.0&app_id=YOUR_APP_ID&date=" + dates + "&location=" + city + "," + state + "&radius=" + request.args.get('search-radius'))
+        search_bid = search_bid.json()
+
+    except KeyError:
+
+        flash('Please try again!')
+        return redirect(url_for('/'))
+
+
 
 
     #Getting new playlist id
@@ -433,22 +442,19 @@ def results():
 
     add_multiple(song_string, playlist_id)
 
-    try:
+
         
-        iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
+    iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
 
-        iframe_embed = iframe_data.replace('.com', '.com/embed')
+    iframe_embed = iframe_data.replace('.com', '.com/embed')
 
-        https_iframe = iframe_embed.replace('http', 'https')
+    https_iframe = iframe_embed.replace('http', 'https')
 
-        spotify_player_source = https_iframe
+    spotify_player_source = https_iframe
 
-        return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
+    return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
-    except KeyError:
 
-        flash('Please try again!')
-        return redirect(url_for('/'))
 
 
 
