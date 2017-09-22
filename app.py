@@ -404,7 +404,7 @@ def results():
     counter = 0
     for i in just_ids:
         name = top_tracks(i).data
-        if counter == 50
+        if counter == 50:
             break
         if 'tracks' in name and (len(name['tracks'])) > 0:
                 if name['tracks'][0]['id'] is not None and name['tracks'][0]['id'] is not None:
