@@ -28,7 +28,7 @@
     <div class="col-sm-9">
         <div id="results-table-div">
           <ul id="results-list">
-            {% if not search_bid.get('errors')  %}
+            {% if not search_bid is mapping  %}
                 {% for s in search_bid %}
                     <div class="results-row">          
                         <div href="" style="float: right;"><img class="band-pic" src="{{first_artist[s['id']]}}" ></div>
