@@ -372,7 +372,7 @@ def results():
     except KeyError:
 
         flash('Please try again!')
-        return redirect(url_for('/'))
+        return redirect(url_for('home'))
 
 
 
@@ -444,7 +444,7 @@ def results():
 
 
     try:
-       
+
         iframe_data = user_playlists().data['items'][0]['external_urls']['spotify']
 
         iframe_embed = iframe_data.replace('.com', '.com/embed')
@@ -456,7 +456,7 @@ def results():
     except KeyError:
 
         flash('Please try again!')
-        return redirect(url_for('/'))
+        return redirect(url_for('home'))
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
