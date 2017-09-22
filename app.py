@@ -254,7 +254,7 @@ def create_playlist():
 
     st = datetime.datetime.fromtimestamp(ts).strftime('%m-%d-%Y')
 
-    user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
+    user_id = session['user_name']
 
     new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "GeoConcert " + st}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
     return new_playlist
@@ -440,7 +440,6 @@ def results():
     https_iframe = iframe_embed.replace('http', 'https')
 
     spotify_player_source = https_iframe
-
 
     return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
 
