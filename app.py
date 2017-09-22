@@ -401,15 +401,11 @@ def results():
 
 
     artist_tracks = []
-    counter = 0
     for i in just_ids:
         name = top_tracks(i).data
-        if counter == 50:
-            break
         if 'tracks' in name and (len(name['tracks'])) > 0:
                 if name['tracks'][0]['id'] is not None and name['tracks'][0]['id'] is not None:
                     artist_tracks.append('spotify:track:' + name['tracks'][0]['id'])
-                    counter = counter + 1   
 
 
     # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
