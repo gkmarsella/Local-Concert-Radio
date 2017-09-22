@@ -29,11 +29,13 @@
         <div id="results-table-div">
           <ul id="results-list">
             {% for s in search_bid %}
-            <a href="" style="float: right;"><img src="{{first_artist[s['id']]}}" style='height: 60px; width: 60px; border-radius: 30px; margin-right: 20px;' class="band-pic"></a>
-            <p class="artist-name"> {{s['artists'][0]['name']}} </p>
-            <p style="margin-bottom: 10px;"> {{s['venue']['name']}}, {{s['venue']['city']}}</p>
-            <p style="margin-bottom: 10px;"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </p>
-            <p style="margin-bottom: 10px;"> <a href="{{s['ticket_url']}}" target="_blank" style="color:#5db63f;">Buy Tickets</a></p>
+            <div class="results-row">          
+                <a href="" style="float: right;"><img src="{{first_artist[s['id']]}}" class="band-pic"></a>
+                <p class="artist-name"> {{s['artists'][0]['name']}} </p>
+                <p class="artist-venue"> {{s['venue']['name']}}, {{s['venue']['city']}}</p>
+                <p class="artist-date"> {{s['datetime'][5:10]}}-{{s['datetime'][:4]}} </p>
+                <p class="artist-ticket"> <a href="{{s['ticket_url']}}" target="_blank" style="">Buy Tickets</a></p>
+            </div>
     <hr></hr>
             {% endfor %}              
           </ul>

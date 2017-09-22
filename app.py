@@ -11,7 +11,7 @@ import json
 import time
 import psycopg2
 import cities
-from datetime import datetime
+import datetime
 
 OAUTH_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
@@ -250,14 +250,13 @@ def get_spotify_oauth_token():
 
 def create_playlist():
 
-    def random_name(size=8):
-        chars = list(string.ascii_lowercase + string.digits)
-        return ''.join(random.choice(chars) for _ in range(size))
+    ts = time.time()
 
+    st = datetime.datetime.fromtimestamp(ts).strftime('%m-%d-%Y')
 
     user_id = spotify.get("https://api.spotify.com/v1/me").data['id']
 
-    new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "GeoConcert"}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
+    new_playlist = spotify.post("https://api.spotify.com/v1/users/"+  quote(user_id, safe='')  +"/playlists/", data={"name": "GeoConcert " + st}, headers={'Accept': 'application/json', 'Content-Type': 'application/json'}, format='json')
     return new_playlist
 
 
@@ -362,8 +361,6 @@ def results():
 
     state_arg = request.args.get('search-city')
     state = state_arg[-2:]
-
-
 
     create_playlist()
 

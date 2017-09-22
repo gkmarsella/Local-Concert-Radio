@@ -127,9 +127,6 @@ input[type="submit"] {
 	margin: 20px;
 }
 
-#submitbutton {
-	width: 199px;
-}
 
 
 
@@ -371,13 +368,6 @@ hr {
  	float: right;
  }
 
- .band-pic {
- 	margin-top: 10%;
- }
-
- .artist-name {
- 	margin-top: 10px;
- }
 
  #results-list {
  	background-color: rgba(0, 0, 0, 0.62);
@@ -385,4 +375,32 @@ hr {
 
  iframe {
  	position: fixed;
+ }
+
+
+ /*Event Info*/
+
+  .band-pic {
+ 	margin-top: 12%;
+ 	height: 85px; 
+ 	width: 80px; 
+ 	border-radius: 7px; 
+ 	margin-right: 20px; 
+ }
+
+ .artist-name {
+ 	margin-top: 10px;
+ }
+
+ .artist-vanue {
+ 	margin-bottom: 10px;
+ }
+
+ .artist-date {
+ 	margin-bottom: 10px;
+ }
+
+ .artist-ticket {
+ 	margin-bottom: 10px;
+ 	color: #5db63f;
  }
