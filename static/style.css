@@ -398,6 +398,8 @@ hr {
 
  .artist-name {
  	margin-top: 10px;
+ 	font-weight: 900;
+    font-size: larger;
  }
 
  .artist-vanue {
