@@ -12,9 +12,6 @@
     });
 </script>
 
-        <a class="navbar-brand" href="{{url_for('login')}}">
-          <img class="logo" alt="Brand" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}">
-        </a>
 
 
 
@@ -26,6 +23,10 @@
 
 
     <div class="col-sm-9">
+        <a class="navbar-brand" href="{{url_for('login')}}">
+          <img class="logo" alt="Brand" src="{{url_for('static', filename='images/geoconcert-whitelogo.png')}}">
+        </a>
+
         <div id="results-table-div">
           <ul id="results-list">
             {% if not search_bid is mapping  %}
