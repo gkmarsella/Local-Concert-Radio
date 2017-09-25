@@ -32,7 +32,8 @@ hr {
 @media screen and (max-width: 767px) {
    iframe { 
    	height: 250px;
-    margin-top: 30px; 
+    margin-top: 30px;
+    position: absolute; 
 	}
 	.navbar-brand {
 		display: none;
@@ -400,7 +401,7 @@ hr {
  }
 
  iframe {
- 	position: absolute;
+ 	position: fixed;
  	padding-right: 6%;
  }
 
