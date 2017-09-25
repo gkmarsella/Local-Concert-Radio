@@ -387,7 +387,7 @@ def results():
     artist_names = []
     artist_counter = 0
     for s in search_bid:
-        if artist_counter == 25:
+        if artist_counter == 20:
             break
         if 'artists' in s: 
             for x in s['artists']:
