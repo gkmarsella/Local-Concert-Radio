@@ -422,10 +422,6 @@ def results():
                 if name['tracks'][0]['id'] is not None and name['tracks'][0]['id'] is not None:
                     artist_tracks.append('spotify:track:' + name['tracks'][0]['id'])
 
-
-    # removing all artists with 'featuring/presents' (which creates multiple duplicates if not filtered out)
-    names_no_feat = {k:v for k,v in artist_dict.items() if 'feat' not in k.lower() or 'presents' not in k.lower() or 'feat.' not in k.lower or 'featuring' not in k.lower()}
-
 ##################################################################################
 ################################## FOR ARTIST IMAGES #############################
     def images(name):
@@ -459,7 +455,7 @@ def results():
 
         spotify_player_source = https_iframe
 
-        return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, names_no_feat=names_no_feat, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
+        return render_template("results.html", search_bid=search_bid, spotify_player_source=spotify_player_source, user_id=user_id, playlist_id=playlist_id, first_artist=first_artist, just_names=just_names)
     
     except KeyError:
 
