@@ -387,10 +387,12 @@ def results():
     artist_names = []
     artist_counter = 0
     for s in search_bid:
-        if artist_counter == 25:
+        yield "<br/>"
+        if artist_counter == 200:
             break
         if 'artists' in s: 
             for x in s['artists']:
+                yield "<br/>"
                 artist_names.append(search_artists(x['name']).data)
                 artist_counter = artist_counter + 1
 
